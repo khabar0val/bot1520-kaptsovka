@@ -5,6 +5,7 @@ import telebot
 import config
 import random
 import sqlite3
+import logging
 import time
  
 from telebot import types
@@ -13,9 +14,12 @@ from datetime import datetime
 
 bot = telebot.TeleBot(config.TOKEN)
 db1520 = SQLighter('db1520.db')
+logger = logging.getLogger(__name__)
 
 @bot.message_handler(commands=['subscribe'])
 def subscribe(message):
+    logger.warning('user {message.from_user.id} has subscribed')
+
     if(not db1520.subscriber_exists(message.from_user.id)):
         # если юзера нет в базе, добавляем его
         db1520.add_subscriber(message.from_user.id)
@@ -28,6 +32,8 @@ def subscribe(message):
 # Команда отписки
 @bot.message_handler(commands=['unsubscribe'])
 def unsubscribe(message):
+    logger.warning('user {message.from_user.id} has unsubscribed')
+
     if(not db1520.subscriber_exists(message.from_user.id)):
         # если юзера нет в базе, добавляем его с неактивной подпиской (запоминаем)
         db1520.add_subscriber(message.from_user.id, False)
@@ -40,6 +46,7 @@ def unsubscribe(message):
 
 @bot.message_handler(commands=['start'])
 def welcome2(message):
+    logger.warning('user {message.from_user.id} has started using bot')
     # keyboard
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     item1 = types.KeyboardButton("👀 Что у нас за школа?")
@@ -51,9 +58,6 @@ def welcome2(message):
     bot.send_message(message.chat.id, "Добро пожаловать, {0.first_name}!\nЯ - <b>{1.first_name}</b>, бот созданный чтобы помогать вам с информацией о школе".format(message.from_user, bot.get_me()),
         parse_mode='html', reply_markup=markup)
 
-    if(not db1520.subscriber_exists(message.from_user.id)):
-        db1520.add_subscriber(message.from_user.id, False)
-
     while True:
         subscriptions = db1520.get_subscriptions()
 
@@ -64,6 +68,8 @@ def welcome2(message):
  
 @bot.message_handler(content_types=['text'])
 def lalala(message):
+    logger.warning('user {message.from_user.id} has started lalala')
+
     if message.chat.type == 'private':
         if message.text == '👀 Что у нас за школа?':
             bot.send_message(message.chat.id, "👨‍🏫 «Школа № 1520 имени Капцовых» — одно из старейших образовательных учреждений Москвы! У истоков современной школы — городское начальное училище для мальчиков имени Сергея Алексеевича Капцова, подаренное городу в мае 1892 года гласным Московской городской Думы, купцом первой гильдии, потомственным почетным гражданином, меценатом Александром Сергеевичем Капцовым в память о своем отце С. А. Капцове. Сейчас во главе нашей школы находится замечательный человек и талантливый директор\nКириченко Вита Викторовна 👏")
@@ -98,6 +104,8 @@ def lalala(message):
 
 @bot.callback_query_handler(func=lambda call: True)
 def callback_inline(call):
+    logger.warning('user {message.from_user.id} has started callback_inline')
+
     try:
         if call.message:
             if call.data == '1':
