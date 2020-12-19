@@ -2,6 +2,7 @@
 #! /usr/bin/e# nv python
 
 import telebot
+import logging
 import config
 import random
 import sqlite3
@@ -14,87 +15,113 @@ from datetime import datetime
 bot = telebot.TeleBot(config.TOKEN)
 db1520 = SQLighter('db1520.db')
 
+# add filemode="w" to overwrite
+logging.basicConfig(filename="", level=logging.WARNING)
+
 @bot.message_handler(commands=['subscribe'])
 def subscribe(message):
-    if(not db1520.subscriber_exists(message.from_user.id)):
-        # если юзера нет в базе, добавляем его
-        db1520.add_subscriber(message.from_user.id)
-    else:
-        # если он уже есть, то просто обновляем ему статус подписки
-        db1520.update_subscription(message.from_user.id, True)
-    
-    bot.send_message(message.from_user.id, "Вы успешно подписались на рассылку!\nЖдите, скоро выйдут новые обзоры и вы узнаете о них первыми =)")
+    try:
+        if(not db1520.subscriber_exists(message.from_user.id)):
+            # если юзера нет в базе, добавляем его
+            db1520.add_subscriber(message.from_user.id)
+        else:
+            # если он уже есть, то просто обновляем ему статус подписки
+            db1520.update_subscription(message.from_user.id, True)
+        
+        bot.send_message(message.from_user.id, "Вы успешно подписались на новости Капцовки!  😝\nСкоро выйдут новые события и вы узнаете о них первыми =)")
+
+    except:
+        logging.warning("WARNING with subscribe")
+        logging.error("ERROR with subscribe")
+        logging.critical("CRITICAL with subscribe")
 
 # Команда отписки
 @bot.message_handler(commands=['unsubscribe'])
 def unsubscribe(message):
-    if(not db1520.subscriber_exists(message.from_user.id)):
-        # если юзера нет в базе, добавляем его с неактивной подпиской (запоминаем)
-        db1520.add_subscriber(message.from_user.id, False)
-        bot.send_message(message.from_user.id, "Вы итак не подписаны.")
-    else:
-        # если он уже есть, то просто обновляем ему статус подписки
-        db1520.update_subscription(message.from_user.id, False)
-        bot.send_message(message.from_user.id, "Вы успешно отписаны.")
+    try:
+        if(not db1520.subscriber_exists(message.from_user.id)):
+            # если юзера нет в базе, добавляем его с неактивной подпиской (запоминаем)
+            db1520.add_subscriber(message.from_user.id, False)
+            bot.send_message(message.from_user.id, "Вы итак не подписаны.")
+        else:
+            # если он уже есть, то просто обновляем ему статус подписки
+            db1520.update_subscription(message.from_user.id, False)
+            bot.send_message(message.from_user.id, "Вы успешно отписаны.")
 
+    except:
+        logging.warning("WARNING with unsubscribe")
+        logging.error("ERROR with unsubscribe")
+        logging.critical("CRITICAL with unsubscribe")
 
 @bot.message_handler(commands=['start'])
 def welcome2(message):
-    # keyboard
-    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    item1 = types.KeyboardButton("👀 Что у нас за школа?")
-    item2 = types.KeyboardButton("🧑‍🏫 Расписание")
-    item3 = types.KeyboardButton("🐵 Поговорим?")
- 
-    markup.add(item1, item2, item3)
- 
-    bot.send_message(message.chat.id, "Добро пожаловать, {0.first_name}!\nЯ - <b>{1.first_name}</b>, бот созданный чтобы помогать вам с информацией о школе".format(message.from_user, bot.get_me()),
-        parse_mode='html', reply_markup=markup)
+    try:
+        # keyboard
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        item1 = types.KeyboardButton("👀 Что у нас за школа такая?")
+        item2 = types.KeyboardButton("🧑‍🏫 Расписание")
+        item3 = types.KeyboardButton("🐵 Поговорим?")
+     
+        markup.add(item1, item2, item3)
+     
+        bot.send_message(message.chat.id, "Добро пожаловать, {0.first_name}!\nЯ - <b>{1.first_name}</b>, бот созданный чтобы помогать вам с информацией о школе".format(message.from_user, bot.get_me()),
+            parse_mode='html', reply_markup=markup)
 
-    if(not db1520.subscriber_exists(message.from_user.id)):
-        db1520.add_subscriber(message.from_user.id, False)
+        if(not db1520.subscriber_exists(message.from_user.id)):
+            # если юзера нет в базе, добавляем его с неактивной подпиской (запоминаем)
+            db1520.add_subscriber(message.from_user.id, False)
 
-    while True:
-        subscriptions = db1520.get_subscriptions()
+        while True:
+            subscriptions = db1520.get_subscriptions()
 
-        bot.send_message(message.from_user.id, "https://www.instagram.com/kaptsovka/?hl=ru\n{0.first_name}, загляни в инстаграм Капцовки.\nВозможно там появилось что-то интересное!".format(message.from_user, bot.get_me()),
-            parse_mode='html')
+            bot.send_message(message.from_user.id, 'https://www.instagram.com/kaptsovka/?hl=ru\n{0.first_name}, загляни в инстаграм Капцовки.\nВозможно там появилось что-то интересное!'.format(message.from_user, bot.get_me()),
+                parse_mode='html')
 
-        time.sleep(345600)
+            time.sleep(345600)
+
+    except:
+        logging.warning("WARNING with welcome2")
+        logging.error("ERROR with welcome2")
+        logging.critical("CRITICAL with welcome2")
  
 @bot.message_handler(content_types=['text'])
 def lalala(message):
-    if message.chat.type == 'private':
-        if message.text == '👀 Что у нас за школа?':
-            bot.send_message(message.chat.id, "👨‍🏫 «Школа № 1520 имени Капцовых» — одно из старейших образовательных учреждений Москвы! У истоков современной школы — городское начальное училище для мальчиков имени Сергея Алексеевича Капцова, подаренное городу в мае 1892 года гласным Московской городской Думы, купцом первой гильдии, потомственным почетным гражданином, меценатом Александром Сергеевичем Капцовым в память о своем отце С. А. Капцове. Сейчас во главе нашей школы находится замечательный человек и талантливый директор\nКириченко Вита Викторовна 👏")
-        elif message.text == '🧑‍🏫 Расписание':
- 
-            markup = types.InlineKeyboardMarkup(row_width=2)
-            item1 = types.InlineKeyboardButton("1 класс", callback_data='1')
-            item2 = types.InlineKeyboardButton("2 класс", callback_data='2')
-            item3 = types.InlineKeyboardButton("3 класс", callback_data='3')
-            item4 = types.InlineKeyboardButton("4 класс", callback_data='4')
-            item5 = types.InlineKeyboardButton("5 класс", callback_data='5')
-            item6 = types.InlineKeyboardButton("6 класс", callback_data='6')
-            item7 = types.InlineKeyboardButton("7 класс", callback_data='7')
-            item8 = types.InlineKeyboardButton("8 класс", callback_data='8')
-            item9 = types.InlineKeyboardButton("9 класс", callback_data='9')
-            item10 = types.InlineKeyboardButton("10 класс", callback_data='10')
-            item11 = types.InlineKeyboardButton("11 класс", callback_data='11')
- 
-            markup.add(item1, item2, item3, item4, item5, item6, item7, item8, item9, item10, item11)
+    try:
+        if message.chat.type == 'private':
+            if message.text == '👀 Что у нас за школа такая?':
+                bot.send_message(message.chat.id, "👨‍🏫 «Школа № 1520 имени Капцовых» — одно из старейших образовательных учреждений Москвы! У истоков современной школы — городское начальное училище для мальчиков имени Сергея Алексеевича Капцова, подаренное городу в мае 1892 года гласным Московской городской Думы, купцом первой гильдии, потомственным почетным гражданином, меценатом Александром Сергеевичем Капцовым в память о своем отце С. А. Капцове. Сейчас во главе нашей школы находится замечательный человек и талантливый директор\nКириченко Вита Викторовна 👏")
+            elif message.text == '🧑‍🏫 Расписание':
+     
+                markup = types.InlineKeyboardMarkup(row_width=2)
+                item1 = types.InlineKeyboardButton("1 класс", callback_data='1')
+                item2 = types.InlineKeyboardButton("2 класс", callback_data='2')
+                item3 = types.InlineKeyboardButton("3 класс", callback_data='3')
+                item4 = types.InlineKeyboardButton("4 класс", callback_data='4')
+                item5 = types.InlineKeyboardButton("5 класс", callback_data='5')
+                item6 = types.InlineKeyboardButton("6 класс", callback_data='6')
+                item7 = types.InlineKeyboardButton("7 класс", callback_data='7')
+                item8 = types.InlineKeyboardButton("8 класс", callback_data='8')
+                item9 = types.InlineKeyboardButton("9 класс", callback_data='9')
+                item10 = types.InlineKeyboardButton("10 класс", callback_data='10')
+                item11 = types.InlineKeyboardButton("11 класс", callback_data='11')
+     
+                markup.add(item1, item2, item3, item4, item5, item6, item7, item8, item9, item10, item11)
 
-            bot.send_message(message.chat.id, "👩‍🏫 В каком вы классе?", reply_markup=markup)
+                bot.send_message(message.chat.id, "👩‍🏫 В каком вы классе?", reply_markup=markup)
 
-        elif message.text == '🐵 Поговорим?':
+            elif message.text == '🐵 Поговорим?':
 
-            markup = types.InlineKeyboardMarkup(row_width=2)
-            item1 = types.InlineKeyboardButton("good", callback_data='good')
-            item2 = types.InlineKeyboardButton("bad", callback_data='bad')
+                markup = types.InlineKeyboardMarkup(row_width=2)
+                item1 = types.InlineKeyboardButton("good", callback_data='good')
+                item2 = types.InlineKeyboardButton("bad", callback_data='bad')
 
-            markup.add(item1, item2)
+                markup.add(item1, item2)
 
-            bot.send_message(message.chat.id, '🐻 How are you?', reply_markup=markup)
+                bot.send_message(message.chat.id, '🐻 How are you?', reply_markup=markup)
+    except:
+        logging.warning("WARNING with lalala")
+        logging.error("ERROR with lalala")
+        logging.critical("CRITICAL with lalala")
 
 @bot.callback_query_handler(func=lambda call: True)
 def callback_inline(call):
@@ -817,13 +844,13 @@ def callback_inline(call):
             elif call.data == 'good':
                 bot.send_message(call.message.chat.id, 'Вот и отличненько 😊')
 
-                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="🐻",
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="🐻 How are you?",
                 reply_markup=None)
 
             elif call.data == 'bad':
                 bot.send_message(call.message.chat.id, 'Бывает 😢')
 
-                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="🐻",
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="🐻 How are you?",
                 reply_markup=None)
 
             else:
@@ -831,6 +858,10 @@ def callback_inline(call):
 
     except Exception as e:
         print(repr(e))
+
+        logging.warning("WARNING with callback_inline")
+        logging.error("ERROR with callback_inline")
+        logging.critical("CRITICAL with callback_inline")
 
 # RUN
 bot.polling(none_stop=True)
