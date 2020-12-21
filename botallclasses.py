@@ -893,28 +893,28 @@ def callback_inline(call):
                 bot.send_message(call.message.chat.id, '1.Первый заместитель директора\n2.+7(495)800-15-20 доб 3006\nПочта: a.komarov@1520edu.ru',
                 parse_mode='html')
 
-                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="А.Ю.Комаров",
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Комаров Александр Юрьевич",
                 reply_markup=None)
 
             elif call.data == 'mvv':
                 bot.send_message(call.message.chat.id, '1.Заместитель директора по содержанию образования\n2.+7(495)800-15-20 доб 2110\nПочта: m.verevkina@1520edu.ru',
                 parse_mode='html')
 
-                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="М.В.Веревкина",
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Веревкина Марина Викторовна",
                 reply_markup=None)
 
             elif call.data == 'mup':
                 bot.send_message(call.message.chat.id, '1.Заместитель директора по оценке качества образования\n2.+7(495)800-15-20 доб 2111\nПочта: m.petrik@1520edu.ru',
                 parse_mode='html')
 
-                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="М.Ю.Петрик",
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Петрик Максим Юрьевич",
                 reply_markup=None)
 
             elif call.data == 'uam':
                 bot.send_message(call.message.chat.id, '1.Заместитель директора по воспитанию и социализации\n2.+7(495)800-15-20 доб 2103\nПочта: y.mihalev@1520edu.ru',
                 parse_mode='html')
 
-                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Ю.А.Михалев",
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Михалев Юрий Анатольевич",
                 reply_markup=None)
 
             elif call.data == 'КР':
