@@ -61,8 +61,9 @@ def welcome2(message):
         item1 = types.KeyboardButton("👀 Что у нас за школа такая?")
         item2 = types.KeyboardButton("🧑‍🏫 Расписание")
         item3 = types.KeyboardButton("🐵 Поговорим?")
+        item4 = types.KeyboardButton("Связаться с...")
      
-        markup.add(item1, item2, item3)
+        markup.add(item1, item2, item3, item4)
      
         bot.send_message(message.chat.id, "Добро пожаловать, {0.first_name}!\nЯ - <b>{1.first_name}</b>, бот созданный чтобы помогать вам с информацией о школе".format(message.from_user, bot.get_me()),
             parse_mode='html', reply_markup=markup)
@@ -118,6 +119,21 @@ def lalala(message):
                 markup.add(item1, item2)
 
                 bot.send_message(message.chat.id, '🐻 How are you?', reply_markup=markup)
+
+            elif message.text == 'Связаться с...':
+
+                markup = types.InlineKeyboardMarkup(row_width=2)
+                item1 = types.InlineKeyboardButton("Педагоги", callback_data='КР')
+                item2 = types.InlineKeyboardButton("Зам. Директора", callback_data='АД')
+                item3 = types.InlineKeyboardButton("Директор", callback_data='Д')
+
+                markup.add(item1, item2, item3)
+
+                bot.send_message(message.chat.id, 'Связаться с...', reply_markup=markup)
+
+            else:
+                bot.send_message(message.chat.id, '😸 Пожалуйста, нажимайте на кнопки')
+
     except:
         logging.warning("WARNING with lalala")
         logging.error("ERROR with lalala")
@@ -851,6 +867,81 @@ def callback_inline(call):
                 bot.send_message(call.message.chat.id, 'Бывает 😢')
 
                 bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="🐻 How are you?",
+                reply_markup=None)
+
+            elif call.data == 'Д':
+                bot.send_message(call.message.chat.id, '1.Директор\n2.+7(495)800-15-20 или +7(916)541-58-01\nПочта: KirichenkoVV@edu.mos.ru', parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Кириченко Вита Викторовна",
+                reply_markup=None)
+
+            elif call.data == 'АД':
+                markup = types.InlineKeyboardMarkup(row_width=2)
+                item1 = types.InlineKeyboardButton("А.Ю.Комаров", callback_data='auk')
+                item2 = types.InlineKeyboardButton("М.В.Веревкина", callback_data='mvv')
+                item3 = types.InlineKeyboardButton("М.Ю.Петрик", callback_data='mup')
+                item4 = types.InlineKeyboardButton("Ю.А.Михалев", callback_data='uam')
+
+                markup.add(item1, item2, item3, item4)
+
+                bot.send_message(call.message.chat.id, 'С кем хотите связаться?', reply_markup=markup)
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Связаться с...",
+                reply_markup=None)
+
+            elif call.data == 'auk':
+                bot.send_message(call.message.chat.id, '1.Первый заместитель директора\n2.+7(495)800-15-20 доб 3006\nПочта: a.komarov@1520edu.ru',
+                parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="А.Ю.Комаров",
+                reply_markup=None)
+
+            elif call.data == 'mvv':
+                bot.send_message(call.message.chat.id, '1.Заместитель директора по содержанию образования\n2.+7(495)800-15-20 доб 2110\nПочта: m.verevkina@1520edu.ru',
+                parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="М.В.Веревкина",
+                reply_markup=None)
+
+            elif call.data == 'mup':
+                bot.send_message(call.message.chat.id, '1.Заместитель директора по оценке качества образования\n2.+7(495)800-15-20 доб 2111\nПочта: m.petrik@1520edu.ru',
+                parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="М.Ю.Петрик",
+                reply_markup=None)
+
+            elif call.data == 'uam':
+                bot.send_message(call.message.chat.id, '1.Заместитель директора по воспитанию и социализации\n2.+7(495)800-15-20 доб 2103\nПочта: y.mihalev@1520edu.ru',
+                parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Ю.А.Михалев",
+                reply_markup=None)
+
+            elif call.data == 'КР':
+                markup = types.InlineKeyboardMarkup(row_width=3)
+                item1 = types.InlineKeyboardButton("Рус. Яз.", callback_data='rus')
+                item2 = types.InlineKeyboardButton("Математика", callback_data='mat')
+                item3 = types.InlineKeyboardButton("Англ. Яз.", callback_data='eng')
+                item4 = types.InlineKeyboardButton("Нем. Яз.", callback_data='ger')
+                item5 = types.InlineKeyboardButton("Франц. Яз.", callback_data='fren')
+                item6 = types.InlineKeyboardButton("Биология", callback_data='bio')
+                item7 = types.InlineKeyboardButton("Физика", callback_data='phys')
+                item8 = types.InlineKeyboardButton("История", callback_data='hist')
+                item9 = types.InlineKeyboardButton("Обществ.", callback_data='soc')
+                item10 = types.InlineKeyboardButton("Физк-ра", callback_data='physk')
+                item11 = types.InlineKeyboardButton("География", callback_data='geo')
+                item12 = types.InlineKeyboardButton("Музыка", callback_data='mus')
+                item13 = types.InlineKeyboardButton("Информат.", callback_data='info')
+                item14 = types.InlineKeyboardButton("Химия", callback_data='chem')
+                item15 = types.InlineKeyboardButton("ОБЖ", callback_data='obj')
+                item16 = types.InlineKeyboardButton("Нач. Классы", callback_data='startclass')
+                item17 = types.InlineKeyboardButton("Доп. обр.", callback_data='moreclass')
+
+                markup.add(item1, item2, item3, item4, item5, item6, item7, item8, item9, item10, item11, item12, item13, item14, item15, item16, item17)
+
+                bot.send_message(call.message.chat.id, 'Какой предмет преподает нужный вам учитель?', reply_markup=markup)
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Связаться с...",
                 reply_markup=None)
 
             else:
