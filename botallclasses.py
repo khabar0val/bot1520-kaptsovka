@@ -1173,8 +1173,147 @@ def callback_inline(call):
             elif call.data == 'gavrik':
                 bot.send_message(call.message.chat.id, '1.Учитель Математики\nПочта: o.drobot@1520edu.ru',
                 parse_mode='html')
+<<<<<<< HEAD
                 
                 bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Доронин Алексей Владимирович",                     reply_markup=None)
+=======
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Доронин Алексей Владимирович",
+                reply_markup=None)
+
+            elif call.data == 'gering':
+                bot.send_message(call.message.chat.id, '1.Учитель Математики\nПочт: i.ananyeva@1520edu.ru',
+                parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Богданова Мария Алексеевна",
+                reply_markup=None)
+
+            elif call.data == 'grom':
+                bot.send_message(call.message.chat.id, '1.Учитель Математики\nПочта: t.vedenkina@1520edu.ru',
+                parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Бондарева",
+                reply_markup=None)
+
+            elif call.data == 'ermol':
+                bot.send_message(call.message.chat.id, '1.Учитель Математики\nПочта: a.doronin@1520edu.ru',
+                parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Доронин Алексей Владимирович",
+                reply_markup=None)
+
+            elif call.data == 'zhark':
+                bot.send_message(call.message.chat.id, '1.Учитель Математики\nПочта: o.drobot@1520edu.ru',
+                parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Доронин Алексей Владимирович",
+                reply_markup=None)
+
+            elif call.data == 'zavar':
+                bot.send_message(call.message.chat.id, '1.Учитель Математики\nПочт: i.ananyeva@1520edu.ru',
+                parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Богданова Мария Алексеевна",
+                reply_markup=None)
+
+            elif call.data == 'kuzik':
+                bot.send_message(call.message.chat.id, '1.Учитель Математики\nПочта: t.vedenkina@1520edu.ru',
+                parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Бондарева",
+                reply_markup=None)
+
+            elif call.data == 'leon':
+                bot.send_message(call.message.chat.id, '1.Учитель Математики\nПочта: a.doronin@1520edu.ru',
+                parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Доронин Алексей Владимирович",
+                reply_markup=None)
+
+            elif call.data == 'lezis':
+                bot.send_message(call.message.chat.id, '1.Учитель Математики\nПочта: o.drobot@1520edu.ru',
+                parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Доронин Алексей Владимирович",
+                reply_markup=None)
+
+            elif call.data == 'lutkova':
+                bot.send_message(call.message.chat.id, '1.Учитель Математики\nПочт: i.ananyeva@1520edu.ru',
+                parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Богданова Мария Алексеевна",
+                reply_markup=None)
+
+            elif call.data == 'maximenko':
+                bot.send_message(call.message.chat.id, '1.Учитель Математики\nПочта: t.vedenkina@1520edu.ru',
+                parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Бондарева",
+                reply_markup=None)
+
+            elif call.data == 'milov':
+                bot.send_message(call.message.chat.id, '1.Учитель Математики\nПочта: a.doronin@1520edu.ru',
+                parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Доронин Алексей Владимирович",
+                reply_markup=None)
+
+            elif call.data == 'mukos':
+                bot.send_message(call.message.chat.id, '1.Учитель Математики\nПочта: o.drobot@1520edu.ru',
+                parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Доронин Алексей Владимирович",
+                reply_markup=None)
+
+            elif call.data == 'musht':
+                bot.send_message(call.message.chat.id, '1.Учитель Математики\nПочт: i.ananyeva@1520edu.ru',
+                parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Богданова Мария Алексеевна",
+                reply_markup=None)
+
+            elif call.data == 'nelub':
+                bot.send_message(call.message.chat.id, '1.Учитель Математики\nПочта: t.vedenkina@1520edu.ru',
+                parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Бондарева",
+                reply_markup=None)
+
+            elif call.data == 'petros':
+                bot.send_message(call.message.chat.id, '1.Учитель Математики\nПочта: a.doronin@1520edu.ru',
+                parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Доронин Алексей Владимирович",
+                reply_markup=None)
+
+            elif call.data == 'sergeeva':
+                bot.send_message(call.message.chat.id, '1.Учитель Математики\nПочта: o.drobot@1520edu.ru',
+                parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Доронин Алексей Владимирович",
+                reply_markup=None)
+
+            elif call.data == 'sokol':
+                bot.send_message(call.message.chat.id, '1.Учитель Математики\nПочта: o.drobot@1520edu.ru',
+                parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Доронин Алексей Владимирович",
+                reply_markup=None)
+
+            elif call.data == 'chernoborod':
+                bot.send_message(call.message.chat.id, '1.Учитель Математики\nПочта: o.drobot@1520edu.ru',
+                parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Доронин Алексей Владимирович",
+                reply_markup=None)
+
+            elif call.data == 'shir':
+                bot.send_message(call.message.chat.id, '1.Учитель Математики\nПочта: o.drobot@1520edu.ru',
+                parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Доронин Алексей Владимирович",
+                reply_markup=None)
+>>>>>>> 08e15cc6eda01765a6f957e5ccd57c246fe48cf5
 
             else:
                 bot.send_message(call.message.chat.id, '😸 Пожалуйста, нажимайте на кнопки')    
