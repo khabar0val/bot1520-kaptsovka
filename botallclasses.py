@@ -1173,10 +1173,6 @@ def callback_inline(call):
             elif call.data == 'gavrik':
                 bot.send_message(call.message.chat.id, '1.Учитель Математики\nПочта: o.drobot@1520edu.ru',
                 parse_mode='html')
-<<<<<<< HEAD
-                
-                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Доронин Алексей Владимирович",                     reply_markup=None)
-=======
 
                 bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Доронин Алексей Владимирович",
                 reply_markup=None)
@@ -1313,7 +1309,6 @@ def callback_inline(call):
 
                 bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Доронин Алексей Владимирович",
                 reply_markup=None)
->>>>>>> 08e15cc6eda01765a6f957e5ccd57c246fe48cf5
 
             else:
                 bot.send_message(call.message.chat.id, '😸 Пожалуйста, нажимайте на кнопки')    
