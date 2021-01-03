@@ -576,3 +576,79 @@ ERROR:root:ERROR with callback_inline
 CRITICAL:root:CRITICAL with callback_inline
 ERROR:TeleBot:A request to the Telegram API was unsuccessful. Error code: 409. Description: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
 ERROR:TeleBot:A request to the Telegram API was unsuccessful. Error code: 409. Description: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+ERROR:TeleBot:ConnectionError occurred, args=(ProtocolError('Connection aborted.', ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None)),)
+Traceback (most recent call last):
+  File "C:\Users\Александр Хабаров\AppData\Local\Programs\Python\Python37-32\lib\site-packages\urllib3\connectionpool.py", line 601, in urlopen
+    chunked=chunked)
+  File "C:\Users\Александр Хабаров\AppData\Local\Programs\Python\Python37-32\lib\site-packages\urllib3\connectionpool.py", line 387, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 2, in raise_from
+  File "C:\Users\Александр Хабаров\AppData\Local\Programs\Python\Python37-32\lib\site-packages\urllib3\connectionpool.py", line 383, in _make_request
+    httplib_response = conn.getresponse()
+  File "C:\Users\Александр Хабаров\AppData\Local\Programs\Python\Python37-32\lib\http\client.py", line 1336, in getresponse
+    response.begin()
+  File "C:\Users\Александр Хабаров\AppData\Local\Programs\Python\Python37-32\lib\http\client.py", line 306, in begin
+    version, status, reason = self._read_status()
+  File "C:\Users\Александр Хабаров\AppData\Local\Programs\Python\Python37-32\lib\http\client.py", line 267, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "C:\Users\Александр Хабаров\AppData\Local\Programs\Python\Python37-32\lib\socket.py", line 589, in readinto
+    return self._sock.recv_into(b)
+  File "C:\Users\Александр Хабаров\AppData\Local\Programs\Python\Python37-32\lib\ssl.py", line 1071, in recv_into
+    return self.read(nbytes, buffer)
+  File "C:\Users\Александр Хабаров\AppData\Local\Programs\Python\Python37-32\lib\ssl.py", line 929, in read
+    return self._sslobj.read(len, buffer)
+ConnectionResetError: [WinError 10054] Удаленный хост принудительно разорвал существующее подключение
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Александр Хабаров\AppData\Local\Programs\Python\Python37-32\lib\site-packages\requests\adapters.py", line 440, in send
+    timeout=timeout
+  File "C:\Users\Александр Хабаров\AppData\Local\Programs\Python\Python37-32\lib\site-packages\urllib3\connectionpool.py", line 639, in urlopen
+    _stacktrace=sys.exc_info()[2])
+  File "C:\Users\Александр Хабаров\AppData\Local\Programs\Python\Python37-32\lib\site-packages\urllib3\util\retry.py", line 357, in increment
+    raise six.reraise(type(error), error, _stacktrace)
+  File "C:\Users\Александр Хабаров\AppData\Local\Programs\Python\Python37-32\lib\site-packages\urllib3\packages\six.py", line 685, in reraise
+    raise value.with_traceback(tb)
+  File "C:\Users\Александр Хабаров\AppData\Local\Programs\Python\Python37-32\lib\site-packages\urllib3\connectionpool.py", line 601, in urlopen
+    chunked=chunked)
+  File "C:\Users\Александр Хабаров\AppData\Local\Programs\Python\Python37-32\lib\site-packages\urllib3\connectionpool.py", line 387, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 2, in raise_from
+  File "C:\Users\Александр Хабаров\AppData\Local\Programs\Python\Python37-32\lib\site-packages\urllib3\connectionpool.py", line 383, in _make_request
+    httplib_response = conn.getresponse()
+  File "C:\Users\Александр Хабаров\AppData\Local\Programs\Python\Python37-32\lib\http\client.py", line 1336, in getresponse
+    response.begin()
+  File "C:\Users\Александр Хабаров\AppData\Local\Programs\Python\Python37-32\lib\http\client.py", line 306, in begin
+    version, status, reason = self._read_status()
+  File "C:\Users\Александр Хабаров\AppData\Local\Programs\Python\Python37-32\lib\http\client.py", line 267, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "C:\Users\Александр Хабаров\AppData\Local\Programs\Python\Python37-32\lib\socket.py", line 589, in readinto
+    return self._sock.recv_into(b)
+  File "C:\Users\Александр Хабаров\AppData\Local\Programs\Python\Python37-32\lib\ssl.py", line 1071, in recv_into
+    return self.read(nbytes, buffer)
+  File "C:\Users\Александр Хабаров\AppData\Local\Programs\Python\Python37-32\lib\ssl.py", line 929, in read
+    return self._sslobj.read(len, buffer)
+urllib3.exceptions.ProtocolError: ('Connection aborted.', ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Александр Хабаров\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telebot\util.py", line 69, in run
+    task(*args, **kwargs)
+  File "C:\Users\Александр Хабаров\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telebot\__init__.py", line 285, in __retrieve_updates
+    updates = self.get_updates(offset=(self.last_update_id + 1), timeout=timeout)
+  File "C:\Users\Александр Хабаров\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telebot\__init__.py", line 255, in get_updates
+    json_updates = apihelper.get_updates(self.token, offset, limit, timeout, allowed_updates)
+  File "C:\Users\Александр Хабаров\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telebot\apihelper.py", line 241, in get_updates
+    return _make_request(token, method_url, params=payload)
+  File "C:\Users\Александр Хабаров\AppData\Local\Programs\Python\Python37-32\lib\site-packages\telebot\apihelper.py", line 104, in _make_request
+    timeout=(connect_timeout, read_timeout), proxies=proxy)
+  File "C:\Users\Александр Хабаров\AppData\Local\Programs\Python\Python37-32\lib\site-packages\requests\sessions.py", line 508, in request
+    resp = self.send(prep, **send_kwargs)
+  File "C:\Users\Александр Хабаров\AppData\Local\Programs\Python\Python37-32\lib\site-packages\requests\sessions.py", line 618, in send
+    r = adapter.send(request, **kwargs)
+  File "C:\Users\Александр Хабаров\AppData\Local\Programs\Python\Python37-32\lib\site-packages\requests\adapters.py", line 490, in send
+    raise ConnectionError(err, request=request)
+requests.exceptions.ConnectionError: ('Connection aborted.', ConnectionResetError(10054, 'Удаленный хост принудительно разорвал существующее подключение', None, 10054, None))
+
