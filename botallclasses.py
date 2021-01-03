@@ -1114,7 +1114,7 @@ def callback_inline(call):
                 parse_mode='html')
 
                 bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Якушкина Дарья Павловна",
-                reply_markup=None)
+                        reply_markup=None)
 
             elif call.data == 'eng':
                 markup = types.InlineKeyboardMarkup(row_width=2)
@@ -1148,6 +1148,33 @@ def callback_inline(call):
 
                 bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Какой предмет?",
                 reply_markup=None)
+
+            elif call.data == 'bogdan':
+                bot.send_message(call.message.chat.id, '1.Учитель Математики\nПочт: i.ananyeva@1520edu.ru',
+                parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Богданова Мария Алексеевна",
+                reply_markup=None)
+
+            elif call.data == 'bondar':
+                bot.send_message(call.message.chat.id, '1.Учитель Математики\nПочта: t.vedenkina@1520edu.ru',
+                parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Бондарева",
+                reply_markup=None)
+
+            elif call.data == 'vigdor':
+                bot.send_message(call.message.chat.id, '1.Учитель Математики\nПочта: a.doronin@1520edu.ru',
+                parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Доронин Алексей Владимирович",
+                reply_markup=None)
+
+            elif call.data == 'gavrik':
+                bot.send_message(call.message.chat.id, '1.Учитель Математики\nПочта: o.drobot@1520edu.ru',
+                parse_mode='html')
+                
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Доронин Алексей Владимирович",                     reply_markup=None)
 
             else:
                 bot.send_message(call.message.chat.id, '😸 Пожалуйста, нажимайте на кнопки')    
