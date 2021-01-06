@@ -1360,6 +1360,26 @@ def callback_inline(call):
                 bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Яцина Анна Юрьевна",
                 reply_markup=None)
 
+            elif call.data == 'fren':
+                markup = types.InlineKeyboardMarkup(row_width=2)
+                item1 = types.InlineKeyboardButton("И.Ю. Ананьева", callback_data='anan')
+                item2 = types.InlineKeyboardButton("Т.В. Веденькина", callback_data='veden')
+                item3 = types.InlineKeyboardButton("А.В. Доронин", callback_data='doron')
+                item4 = types.InlineKeyboardButton("О.А. Дробот", callback_data='drobot')
+                item5 = types.InlineKeyboardButton("Е.Г. Козлова", callback_data='kozl')
+                item6 = types.InlineKeyboardButton("П.Н. Пронин", callback_data='pron')
+                item7 = types.InlineKeyboardButton("И.А. Романова", callback_data='roman')
+                item8 = types.InlineKeyboardButton("М.А. Цыбанов", callback_data='tsyban')
+                item9 = types.InlineKeyboardButton("Т.Г. Шигина", callback_data='shig')
+                item10 = types.InlineKeyboardButton("Д.П. Якушкина", callback_data='yakushk')
+
+                markup.add(item1, item2, item3, item4, item5, item6, item7, item8, item9, item10)
+
+                bot.send_message(call.message.chat.id, 'Какой учитель?', reply_markup=markup)
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Какой предмет?",
+                reply_markup=None)
+
             else:
                 bot.send_message(call.message.chat.id, '😸 Пожалуйста, нажимайте на кнопки')    
 
