@@ -1318,6 +1318,48 @@ def callback_inline(call):
                 bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Ширяева Татьяна Сергеевна",
                 reply_markup=None)
 
+            elif call.data == 'ger':
+                markup = types.InlineKeyboardMarkup(row_width=2)
+                item1 = types.InlineKeyboardButton("Е.Н. Громыхина", callback_data='gromyh')
+                item2 = types.InlineKeyboardButton("О.Е. Мурзина", callback_data='murz')
+                item3 = types.InlineKeyboardButton("С.Е. Якимов", callback_data='yakim')
+                item4 = types.InlineKeyboardButton("А.Ю. Яцина", callback_data='yatsyna')
+
+                markup.add(item1, item2, item3, item4)
+
+                bot.send_message(call.message.chat.id, 'Какой учитель?', reply_markup=markup)
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Какой предмет?",
+                reply_markup=None)
+
+            elif call.data == 'gromyh':
+                bot.send_message(call.message.chat.id, '1.Учитель Немецкого\nПочта: e.gromykhina@1520edu.ru',
+                parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Громыхина Елена Николаевна",
+                reply_markup=None)
+
+            elif call.data == 'murz':
+                bot.send_message(call.message.chat.id, '1.Учитель Немецкого\nПочта: o.murzina@1520edu.ru',
+                parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Мурзина Ольга Евгеньевна",
+                reply_markup=None)
+
+            elif call.data == 'yakim':
+                bot.send_message(call.message.chat.id, '1.Учитель Немецкого\nПочта: s.jakimov@1520edu.ru',
+                parse_mode='html')
+                
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Якимов Сергей Евгеньевич",
+                reply_markup=None)
+
+            elif call.data == 'yatsyna':
+                bot.send_message(call.message.chat.id, '1.Учитель Немецкого\nПочта: a.yatsina@1520edu.ru',
+                parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Яцина Анна Юрьевна",
+                reply_markup=None)
+
             else:
                 bot.send_message(call.message.chat.id, '😸 Пожалуйста, нажимайте на кнопки')    
 

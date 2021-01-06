@@ -655,3 +655,15 @@ requests.exceptions.ConnectionError: ('Connection aborted.', ConnectionResetErro
 WARNING:root:WARNING with lalala
 ERROR:root:ERROR with lalala
 CRITICAL:root:CRITICAL with lalala
+WARNING:root:WARNING with callback_inline
+ERROR:root:ERROR with callback_inline
+CRITICAL:root:CRITICAL with callback_inline
+WARNING:root:WARNING with callback_inline
+ERROR:root:ERROR with callback_inline
+CRITICAL:root:CRITICAL with callback_inline
+WARNING:root:WARNING with callback_inline
+ERROR:root:ERROR with callback_inline
+CRITICAL:root:CRITICAL with callback_inline
+WARNING:root:WARNING with callback_inline
+ERROR:root:ERROR with callback_inline
+CRITICAL:root:CRITICAL with callback_inline
