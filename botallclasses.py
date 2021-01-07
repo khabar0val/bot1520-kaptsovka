@@ -1375,8 +1375,43 @@ def callback_inline(call):
                 bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Какой предмет?",
                 reply_markup=None)
 
+            elif call.data == 'artemova':
+                bot.send_message(call.message.chat.id, '1.Учитель Французского\nПочта: n.artemova@1520edu.ru',
+                parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Артемова Наталья Сергеевна",
+                reply_markup=None)
+
+            elif call.data == 'voronina':
+                bot.send_message(call.message.chat.id, '1.Учитель Французского\nПочта: a.voronina@1520edu.ru',
+                parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Воронина Анна Владиславовна",
+                reply_markup=None)
+
+            elif call.data == 'granova':
+                bot.send_message(call.message.chat.id, '1.Учитель Французского\nПочта: m.granova@1520edu.ru',
+                parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Гранова Марина Юрьевна",
+                reply_markup=None)
+
+            elif call.data == 'nazarova':
+                bot.send_message(call.message.chat.id, '1.Учитель Французского\nПочта: yu.nazarova@1520edu.ru',
+                parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Назарова Юлия Александровна",
+                reply_markup=None)
+
+            elif call.data == 'nekludova':
+                bot.send_message(call.message.chat.id, '1.Учитель Французского\nПочта: t.nekludova@1520edu.ru',
+                parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Неклюдова Татьяна Макаровна",
+                reply_markup=None)
+
             else:
-                bot.send_message(call.message.chat.id, '😸 Пожалуйста, нажимайте на кнопки')    
+                bot.send_message(call.message.chat.id, '😸 Пожалуйста, нажимайте на кнопки')
 
     except Exception as e:
         print(repr(e))
