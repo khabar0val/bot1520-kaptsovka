@@ -1362,18 +1362,13 @@ def callback_inline(call):
 
             elif call.data == 'fren':
                 markup = types.InlineKeyboardMarkup(row_width=2)
-                item1 = types.InlineKeyboardButton("И.Ю. Ананьева", callback_data='anan')
-                item2 = types.InlineKeyboardButton("Т.В. Веденькина", callback_data='veden')
-                item3 = types.InlineKeyboardButton("А.В. Доронин", callback_data='doron')
-                item4 = types.InlineKeyboardButton("О.А. Дробот", callback_data='drobot')
-                item5 = types.InlineKeyboardButton("Е.Г. Козлова", callback_data='kozl')
-                item6 = types.InlineKeyboardButton("П.Н. Пронин", callback_data='pron')
-                item7 = types.InlineKeyboardButton("И.А. Романова", callback_data='roman')
-                item8 = types.InlineKeyboardButton("М.А. Цыбанов", callback_data='tsyban')
-                item9 = types.InlineKeyboardButton("Т.Г. Шигина", callback_data='shig')
-                item10 = types.InlineKeyboardButton("Д.П. Якушкина", callback_data='yakushk')
+                item1 = types.InlineKeyboardButton("Н.С. Артемова", callback_data='artemova')
+                item2 = types.InlineKeyboardButton("А.В. Воронина", callback_data='voronina')
+                item3 = types.InlineKeyboardButton("М.Ю. Гранова", callback_data='granova')
+                item4 = types.InlineKeyboardButton("Ю.А. Назарова", callback_data='nazarova')
+                item5 = types.InlineKeyboardButton("Т.М. Неклюдова", callback_data='nekludova')
 
-                markup.add(item1, item2, item3, item4, item5, item6, item7, item8, item9, item10)
+                markup.add(item1, item2, item3, item4, item5)
 
                 bot.send_message(call.message.chat.id, 'Какой учитель?', reply_markup=markup)
 
