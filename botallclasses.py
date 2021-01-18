@@ -1410,6 +1410,74 @@ def callback_inline(call):
                 bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Неклюдова Татьяна Макаровна",
                 reply_markup=None)
 
+            elif call.data == 'bio':
+                markup = types.InlineKeyboardMarkup(row_width=2)
+                item1 = types.InlineKeyboardButton("Е.Н. Амосова", callback_data='amosova')
+                item2 = types.InlineKeyboardButton("К.С. Москвитина", callback_data='moskvitina')
+                item3 = types.InlineKeyboardButton("Е.А. Новикова", callback_data='novikova')
+                item4 = types.InlineKeyboardButton("Д.А. Соловков", callback_data='solovkov')
+
+                markup.add(item1, item2, item3, item4)
+
+                bot.send_message(call.message.chat.id, 'Какой учитель?', reply_markup=markup)
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Какой предмет?",
+                reply_markup=None)
+
+            elif call.data == 'amosova':
+                bot.send_message(call.message.chat.id, '1.Учитель Биологии\nПочта: e.amosova@1520edu.ru',
+                parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Амосова Евгения Николаевна",
+                reply_markup=None)
+
+            elif call.data == 'moskvitina':
+                bot.send_message(call.message.chat.id, '1.Учитель Биологии\nПочта: k.moskvitina@1520edu.ru',
+                parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Москвитина Ксения Сергеевна",
+                reply_markup=None)
+
+            elif call.data == 'novikova':
+                bot.send_message(call.message.chat.id, '1.Учитель Биологии\nПочта: e.novikova@1520edu.ru',
+                parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Новикова Елена Александровна",
+                reply_markup=None)
+
+            elif call.data == 'solovkov':
+                bot.send_message(call.message.chat.id, '1.Учитель Биологии\nПочта: d.solovkov@1520edu.ru',
+                parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Соловков Дмитрий Андреевич",
+                reply_markup=None)
+
+            elif call.data == 'phys':
+                markup = types.InlineKeyboardMarkup(row_width=2)
+                item1 = types.InlineKeyboardButton("А.А. Барат", callback_data='barat')
+                item2 = types.InlineKeyboardButton("О.Г. Гладченко", callback_data='gladchenko')
+
+                markup.add(item1, item2)
+
+                bot.send_message(call.message.chat.id, 'Какой учитель?', reply_markup=markup)
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Какой предмет?",
+                reply_markup=None)
+
+            elif call.data == 'barat':
+                bot.send_message(call.message.chat.id, '1.Учитель Физики\nПочта: a.barat@1520edu.ru',
+                parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Барат Артем Александрович",
+                reply_markup=None)
+
+            elif call.data == 'gladchenko':
+                bot.send_message(call.message.chat.id, '1.Учитель Физики\nПочта: o.gladchenko@1520edu.ru',
+                parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Гладченко Ольга Геннадиевна",
+                reply_markup=None)
+
             else:
                 bot.send_message(call.message.chat.id, '😸 Пожалуйста, нажимайте на кнопки')
 
