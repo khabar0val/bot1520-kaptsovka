@@ -1478,6 +1478,22 @@ def callback_inline(call):
                 bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Гладченко Ольга Геннадиевна",
                 reply_markup=None)
 
+            elif call.data == 'hist':
+                markup = types.InlineKeyboardMarkup(row_width=2)
+                item1 = types.InlineKeyboardButton("Н.С. Барскова", callback_data='barskova')
+                item2 = types.InlineKeyboardButton("С.В. Дмитриева", callback_data='dmitrieva')
+                item3 = types.InlineKeyboardButton("А.П. Липовская", callback_data='lipovskaya')
+                item4 = types.InlineKeyboardButton("С.В. Погорелова", callback_data='pogorelova')
+                item5 = types.InlineKeyboardButton("С.В. Фильченкова", callback_data='filchenkova')
+                item6 = types.InlineKeyboardButton("Т.В. Черкашина", callback_data='cherkashina')
+
+                markup.add(item1, item2, item3, item4, item5, item6)
+
+                bot.send_message(call.message.chat.id, 'Какой учитель?', reply_markup=markup)
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Какой предмет?",
+                reply_markup=None)
+
             else:
                 bot.send_message(call.message.chat.id, '😸 Пожалуйста, нажимайте на кнопки')
 
