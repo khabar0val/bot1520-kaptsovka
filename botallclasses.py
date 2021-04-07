@@ -1485,13 +1485,63 @@ def callback_inline(call):
                 item3 = types.InlineKeyboardButton("А.П. Липовская", callback_data='lipovskaya')
                 item4 = types.InlineKeyboardButton("С.В. Погорелова", callback_data='pogorelova')
                 item5 = types.InlineKeyboardButton("С.В. Фильченкова", callback_data='filchenkova')
-                item6 = types.InlineKeyboardButton("Т.В. Черкашина", callback_data='cherkashina')
+                item6 = types.InlineKeyboardButton("К.И. Фрейзе", callback_data='freize')
+                item7 = types.InlineKeyboardButton("Т.В. Черкашина", callback_data='cherkashina')
 
-                markup.add(item1, item2, item3, item4, item5, item6)
+                markup.add(item1, item2, item3, item4, item5, item6, item7)
 
                 bot.send_message(call.message.chat.id, 'Какой учитель?', reply_markup=markup)
 
                 bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Какой предмет?",
+                reply_markup=None)
+
+            elif call.data == 'barskova':
+                bot.send_message(call.message.chat.id, '1.Учитель Истории\nПочта: n.barskova@1520edu.ru',
+                parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Барскова Наталья Станиславовна",
+                reply_markup=None)
+
+            elif call.data == 'dmitrieva':
+                bot.send_message(call.message.chat.id, '1.Учитель Истории\nПочта: s.dmitrieva@1520edu.ru',
+                parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Дмитриева Светлана Викторовна",
+                reply_markup=None)
+
+            elif call.data == 'lipovskaya':
+                bot.send_message(call.message.chat.id, '1.Учитель Истории\nПочта: a.lipovskaya@1520edu.ru',
+                parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Липовская Анастасия Петровна",
+                reply_markup=None)
+
+            elif call.data == 'pogorelova':
+                bot.send_message(call.message.chat.id, '1.Учитель Истории\nПочта: s.pogorelova@1520edu.ru',
+                parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Погорелова Светлана Викторовна",
+                reply_markup=None)
+
+            elif call.data == 'filchenkova':
+                bot.send_message(call.message.chat.id, '1.Учитель Истории\nПочта: s.filchenkova@1520edu.ru',
+                parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Фильченкова Светлана Викторовна",
+                reply_markup=None)
+
+            elif call.data == 'freize':
+                bot.send_message(call.message.chat.id, '1.Учитель Истории\nПочта: k.freize@1520edu.ru',
+                parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Фрейзе Константин Игоревич",
+                reply_markup=None)
+
+            elif call.data == 'cherkashina':
+                bot.send_message(call.message.chat.id, '1.Учитель Истории\nПочта: t.cherkashina@1520edu.ru',
+                parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Черкашина Татьяна Владимировна",
                 reply_markup=None)
 
             else:
