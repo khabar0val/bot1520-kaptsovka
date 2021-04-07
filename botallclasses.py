@@ -2,13 +2,13 @@
 #! /usr/bin/e# nv python
 
 import telebot
-import logging
 import config
 import random
 import sqlite3
 import time
  
 from telebot import types
+from loguru import logger
 from sqlighter import SQLighter
 from datetime import datetime
 
@@ -16,7 +16,7 @@ bot = telebot.TeleBot(config.TOKEN)
 db1520 = SQLighter('db1520.db')
 
 # add filemode="w" to overwrite
-logging.basicConfig(filename="bot1520log.log", level=logging.WARNING)
+logger.add("bot1520log.log", format = "{time} {level} {message}", level = "WARNING", rotation = "1 week", compression = "zip")
 
 @bot.message_handler(commands=['subscribe'])
 def subscribe(message):
@@ -31,9 +31,9 @@ def subscribe(message):
         bot.send_message(message.from_user.id, "Вы успешно подписались на новости Капцовки!  😝\nСкоро выйдут новые события и вы узнаете о них первыми =)")
 
     except:
-        logging.warning("WARNING with subscribe")
-        logging.error("ERROR with subscribe")
-        logging.critical("CRITICAL with subscribe")
+        logger.warning("WARNING with subscribe")
+        logger.error("ERROR with subscribe")
+        logger.critical("CRITICAL with subscribe")
 
 # Команда отписки
 @bot.message_handler(commands=['unsubscribe'])
@@ -49,9 +49,9 @@ def unsubscribe(message):
             bot.send_message(message.from_user.id, "Вы успешно отписаны.")
 
     except:
-        logging.warning("WARNING with unsubscribe")
-        logging.error("ERROR with unsubscribe")
-        logging.critical("CRITICAL with unsubscribe")
+        logger.warning("WARNING with unsubscribe")
+        logger.error("ERROR with unsubscribe")
+        logger.critical("CRITICAL with unsubscribe")
 
 @bot.message_handler(commands=['start'])
 def welcome2(message):
@@ -81,9 +81,9 @@ def welcome2(message):
             time.sleep(345600)
 
     except:
-        logging.warning("WARNING with welcome2")
-        logging.error("ERROR with welcome2")
-        logging.critical("CRITICAL with welcome2")
+        logger.warning("WARNING with welcome2")
+        logger.error("ERROR with welcome2")
+        logger.critical("CRITICAL with welcome2")
  
 @bot.message_handler(content_types=['text'])
 def lalala(message):
@@ -135,9 +135,9 @@ def lalala(message):
                 bot.send_message(message.chat.id, '😸 Пожалуйста, нажимайте на кнопки')
 
     except:
-        logging.warning("WARNING with lalala")
-        logging.error("ERROR with lalala")
-        logging.critical("CRITICAL with lalala")
+        logger.warning("WARNING with lalala")
+        logger.error("ERROR with lalala")
+        logger.critical("CRITICAL with lalala")
 
 @bot.callback_query_handler(func=lambda call: True)
 def callback_inline(call):
@@ -1500,9 +1500,9 @@ def callback_inline(call):
     except Exception as e:
         print(repr(e))
 
-        logging.warning("WARNING with callback_inline")
-        logging.error("ERROR with callback_inline")
-        logging.critical("CRITICAL with callback_inline")
+        logger.warning("WARNING with callback_inline")
+        logger.error("ERROR with callback_inline")
+        logger.critical("CRITICAL with callback_inline")
 
 # RUN
 bot.polling(none_stop=True)
