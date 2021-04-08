@@ -17,7 +17,7 @@ bot = telebot.TeleBot(config.TOKEN)
 db1520 = SQLighter('db1520.db')
 
 # add filemode="w" to overwrite
-logger.add("bot1520log.json", format = "{time} {level} {message}", level = "WARNING")
+logger.add("bot1520log.log", format = "{time} {level} {message}", level = "WARNING", rotation = "1 week", compression = "zip")
 
 @bot.message_handler(commands=['subscribe'])
 def subscribe(message):
