@@ -1634,6 +1634,32 @@ def callback_inline(call):
                 bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Шапортова Марина Петровна",
                 reply_markup=None)
 
+            elif call.data == 'mus':
+                markup = types.InlineKeyboardMarkup(row_width=2)
+                item1 = types.InlineKeyboardButton("В.В. Власова", callback_data='vlasova')
+                item2 = types.InlineKeyboardButton("М.В. Попова", callback_data='popova')
+
+                markup.add(item1, item2)
+
+                bot.send_message(call.message.chat.id, 'Какой учитель?', reply_markup=markup)
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Какой предмет?",
+                reply_markup=None)
+
+            elif call.data == 'vlasova':
+                bot.send_message(call.message.chat.id, '1.Учитель Музыки\nПочта: v.vlasova@1520edu.ru',
+                parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Власова Виталия Вячеславовна",
+                reply_markup=None)
+
+            elif call.data == 'popova':
+                bot.send_message(call.message.chat.id, '1.Учитель Музыки\nПочта: m.popova@1520edu.ru',
+                parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Попова Марина Викторовна",
+                reply_markup=None)
+
             else:
                 bot.send_message(call.message.chat.id, '😸 Пожалуйста, нажимайте на кнопки')
 
