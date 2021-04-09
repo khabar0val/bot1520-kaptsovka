@@ -1608,6 +1608,32 @@ def callback_inline(call):
                 bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Толстов Виктор Викторович",
                 reply_markup=None)
 
+            elif call.data == 'geo':
+                markup = types.InlineKeyboardMarkup(row_width=2)
+                item1 = types.InlineKeyboardButton("Е.С. Гордополова", callback_data='gordopolova')
+                item2 = types.InlineKeyboardButton("М.П. Шапортова", callback_data='shaportova')
+
+                markup.add(item1, item2)
+
+                bot.send_message(call.message.chat.id, 'Какой учитель?', reply_markup=markup)
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Какой предмет?",
+                reply_markup=None)
+
+            elif call.data == 'gordopolova':
+                bot.send_message(call.message.chat.id, '1.Учитель Географии\nПочта: e.gordopolova@1520edu.ru',
+                parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Гордополова Елена Сергеевна",
+                reply_markup=None)
+
+            elif call.data == 'shaportova':
+                bot.send_message(call.message.chat.id, '1.Учитель Географии\nПочта: m.shaportova@1520edu.ru',
+                parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Шапортова Марина Петровна",
+                reply_markup=None)
+
             else:
                 bot.send_message(call.message.chat.id, '😸 Пожалуйста, нажимайте на кнопки')
 
