@@ -1,4 +1,6 @@
-#!/Users/khabarovatatiana/envs/botnos/botnosvenv/bin/python3
+#!/bin/sh
+'''exec' "/mnt/c/Users/Александр Хабаров/desktop/botnos/botnosvenv/bin/python3" "$0" "$@"
+' '''
 # -*- coding: utf-8 -*-
 import re
 import sys

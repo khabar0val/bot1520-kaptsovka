@@ -1660,6 +1660,48 @@ def callback_inline(call):
                 bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Попова Марина Викторовна",
                 reply_markup=None)
 
+            elif call.data == 'info':
+                markup = types.InlineKeyboardMarkup(row_width=2)
+                item1 = types.InlineKeyboardButton("К.С. Желябин", callback_data='zhelyabin')
+                item2 = types.InlineKeyboardButton("Ю.А. Коновалова", callback_data='konovalova')
+                item3 = types.InlineKeyboardButton("Т.А. Лепе", callback_data='lepe')
+                item4 = types.InlineKeyboardButton("П.О. Прокопенко", callback_data='prokopenko')
+
+                markup.add(item1, item2, item3, item4)
+
+                bot.send_message(call.message.chat.id, 'Какой учитель?', reply_markup=markup)
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Какой предмет?",
+                reply_markup=None)
+
+            elif call.data == 'zhelyabin':
+                bot.send_message(call.message.chat.id, '1.Учитель Информатики\nПочта: k.zhelyabin@1520edu.ru',
+                parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Желябин Кирилл Сергеевич",
+                reply_markup=None)
+
+            elif call.data == 'konovalova':
+                bot.send_message(call.message.chat.id, '1.Учитель Информатики\nПочта: j.konovalova@1520edu.ru',
+                parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Коновалова Юлия Алексеевна",
+                reply_markup=None)
+
+            elif call.data == 'lepe':
+                bot.send_message(call.message.chat.id, '1.Учитель Информатики\nПочта: t.lepe@1520edu.ru',
+                parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Лепе Татьяна Анатольевна",
+                reply_markup=None)
+
+            elif call.data == 'prokopenko':
+                bot.send_message(call.message.chat.id, '1.Учитель Информатики\nПочта: p.prokopenko@1520edu.ru',
+                parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Прокопенко Петр Олегович",
+                reply_markup=None)
+
             else:
                 bot.send_message(call.message.chat.id, '😸 Пожалуйста, нажимайте на кнопки')
 
