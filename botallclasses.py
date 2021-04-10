@@ -1350,9 +1350,9 @@ def callback_inline(call):
             elif call.data == 'ger':
                 markup = types.InlineKeyboardMarkup(row_width=2)
                 item1 = types.InlineKeyboardButton("Е.Н. Громыхина", callback_data='gromyh')
-                item2 = types.InlineKeyboardButton("О.Е. Мурзина", callback_data='murz')
-                item3 = types.InlineKeyboardButton("С.Е. Якимов", callback_data='yakim')
-                item4 = types.InlineKeyboardButton("А.Ю. Яцина", callback_data='yatsyna')
+                item2 = types.InlineKeyboardButton("М.В. Маслова", callback_data='maslova')
+                item3 = types.InlineKeyboardButton("О.Е. Мурзина", callback_data='murz')
+                item4 = types.InlineKeyboardButton("С.Е. Якимов", callback_data='yakim')
 
                 markup.add(item1, item2, item3, item4)
 
@@ -1368,6 +1368,13 @@ def callback_inline(call):
                 bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Громыхина Елена Николаевна",
                 reply_markup=None)
 
+            elif call.data == 'maslova':
+                bot.send_message(call.message.chat.id, '1.Учитель Немецкого\nПочта: m.maslova@1520edu.ru',
+                parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Маслова Марина Владимировна",
+                reply_markup=None)
+
             elif call.data == 'murz':
                 bot.send_message(call.message.chat.id, '1.Учитель Немецкого\nПочта: o.murzina@1520edu.ru',
                 parse_mode='html')
@@ -1380,13 +1387,6 @@ def callback_inline(call):
                 parse_mode='html')
                 
                 bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Якимов Сергей Евгеньевич",
-                reply_markup=None)
-
-            elif call.data == 'yatsyna':
-                bot.send_message(call.message.chat.id, '1.Учитель Немецкого\nПочта: a.yatsina@1520edu.ru',
-                parse_mode='html')
-
-                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Яцина Анна Юрьевна",
                 reply_markup=None)
 
             elif call.data == 'fren':
