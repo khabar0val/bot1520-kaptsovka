@@ -1452,9 +1452,10 @@ def callback_inline(call):
             elif call.data == 'phys':
                 markup = types.InlineKeyboardMarkup(row_width=2)
                 item1 = types.InlineKeyboardButton("А.А. Барат", callback_data='barat')
-                item2 = types.InlineKeyboardButton("О.Г. Гладченко", callback_data='gladchenko')
+                item2 = types.InlineKeyboardButton("С.Н. Бозиев", callback_data='boziyev')
+                item3 = types.InlineKeyboardButton("О.Г. Гладченко", callback_data='gladchenko')
 
-                markup.add(item1, item2)
+                markup.add(item1, item2, item3)
 
                 bot.send_message(call.message.chat.id, 'Какой учитель?', reply_markup=markup)
 
@@ -1466,6 +1467,13 @@ def callback_inline(call):
                 parse_mode='html')
 
                 bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Барат Артем Александрович",
+                reply_markup=None)
+
+            elif call.data == 'boziyev':
+                bot.send_message(call.message.chat.id, '1.Учитель Физики\nПочта: s.boziev@1520edu.ru',
+                parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Бозиев Садин Назирович",
                 reply_markup=None)
 
             elif call.data == 'gladchenko':
