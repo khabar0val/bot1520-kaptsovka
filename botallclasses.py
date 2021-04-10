@@ -950,11 +950,13 @@ def callback_inline(call):
                 item4 = types.InlineKeyboardButton("О.В. Зырянова", callback_data='zyr')
                 item5 = types.InlineKeyboardButton("Е.К. Иванова", callback_data='ivan')
                 item6 = types.InlineKeyboardButton("Е.С. Каримова", callback_data='kar')
-                item7 = types.InlineKeyboardButton("И.Л. Перевозчикова", callback_data='perev')
-                item8 = types.InlineKeyboardButton("А.Н. Попова", callback_data='pop')
-                item9 = types.InlineKeyboardButton("М.А. Черушева", callback_data='cheru')
+                item7 = types.InlineKeyboardButton("И.В. Мальцева", callback_data='maltseva')
+                item8 = types.InlineKeyboardButton("Н.С. Патренкина", callback_data='patrenkina')
+                item9 = types.InlineKeyboardButton("И.Л. Перевозчикова", callback_data='perev')
+                item10 = types.InlineKeyboardButton("А.Н. Попова", callback_data='pop')
+                item11 = types.InlineKeyboardButton("М.А. Черушева", callback_data='cheru')
 
-                markup.add(item1, item2, item3, item4, item5, item6, item7, item8, item9)
+                markup.add(item1, item2, item3, item4, item5, item6, item7, item8, item9, item10)
 
                 bot.send_message(call.message.chat.id, 'Какой учитель?', reply_markup=markup)
 
@@ -1001,6 +1003,20 @@ def callback_inline(call):
                 parse_mode='html')
 
                 bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Каримова Елена Сергеевна",
+                reply_markup=None)
+
+            elif call.data == 'maltseva':
+                bot.send_message(call.message.chat.id, '1.Учитель Русского языка и Литературы\nПочта: i.maltseva@1520edu.ru',
+                parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Мальцева Ирина Викторовна",
+                reply_markup=None)
+
+            elif call.data == 'patrenkina':
+                bot.send_message(call.message.chat.id, '1.Учитель Русского языка и Литературы\nПочта: n.patrenkina@1520edu.ru',
+                parse_mode='html')
+
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Патренкина Наталия Сергеевна",
                 reply_markup=None)
 
             elif call.data == 'perev':
