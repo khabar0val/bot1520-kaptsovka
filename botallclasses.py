@@ -2,17 +2,21 @@
 #! /usr/bin/e# nv python
 
 import telebot
-import config
 import random
 import sqlite3
 import time
- 
+
 from telebot import types
 from loguru import logger
 from sqlighter import SQLighter
 from datetime import datetime
 
-bot = telebot.TeleBot(config.TOKEN)
+TOKEN = None
+
+with open("token.txt") as T:
+	TOKEN = T.read().strip()
+
+bot = telebot.TeleBot(TOKEN)
 db1520 = SQLighter('db1520.db')
 
 # add filemode="w" to overwrite
