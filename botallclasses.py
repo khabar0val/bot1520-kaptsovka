@@ -123,7 +123,7 @@ def lalala(message):
             elif message.text == 'Связаться с...':
 
                 markup = types.InlineKeyboardMarkup(row_width=2)
-                item1 = types.InlineKeyboardButton("Педагоги", callback_data='КР')
+                item1 = types.InlineKeyboardButton("Педагоги", callback_data='ПС')
                 item2 = types.InlineKeyboardButton("Зам. Директора", callback_data='АД')
                 item3 = types.InlineKeyboardButton("Директор", callback_data='Д')
 
@@ -877,10 +877,10 @@ def callback_inline(call):
 
             elif call.data == 'АД':
                 markup = types.InlineKeyboardMarkup(row_width=2)
-                item1 = types.InlineKeyboardButton("А.Ю.Комаров", callback_data='auk')
-                item2 = types.InlineKeyboardButton("М.В.Веревкина", callback_data='mvv')
-                item3 = types.InlineKeyboardButton("М.Ю.Петрик", callback_data='mup')
-                item4 = types.InlineKeyboardButton("Ю.А.Михалев", callback_data='uam')
+                item1 = types.InlineKeyboardButton("Н.Т. Ким", callback_data='kim')
+                item2 = types.InlineKeyboardButton("М.В. Веревкина", callback_data='mvv')
+                item3 = types.InlineKeyboardButton("М.Ю. Петрик", callback_data='mup')
+                item4 = types.InlineKeyboardButton("Ю.А. Михалев", callback_data='uam')
 
                 markup.add(item1, item2, item3, item4)
 
@@ -889,11 +889,11 @@ def callback_inline(call):
                 bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Связаться с...",
                 reply_markup=None)
 
-            elif call.data == 'auk':
-                bot.send_message(call.message.chat.id, '1.Первый заместитель директора\n2.+7(495)800-15-20 доб 3006\nПочта: a.komarov@1520edu.ru',
+            elif call.data == 'kim':
+                bot.send_message(call.message.chat.id, '1.Заместитель директора по управлению ресурсами\n2.+7(495)800-15-20 доб 3006\nПочта: n.kim@1520edu.ru',
                 parse_mode='html')
 
-                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Комаров Александр Юрьевич",
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Ким Наталья Трофимовна",
                 reply_markup=None)
 
             elif call.data == 'mvv':
@@ -917,7 +917,7 @@ def callback_inline(call):
                 bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Михалев Юрий Анатольевич",
                 reply_markup=None)
 
-            elif call.data == 'КР':
+            elif call.data == 'ПС':
                 markup = types.InlineKeyboardMarkup(row_width=3)
                 item1 = types.InlineKeyboardButton("Рус. Яз.", callback_data='rus')
                 item2 = types.InlineKeyboardButton("Математика", callback_data='mat')
