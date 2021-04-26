@@ -80,9 +80,12 @@ def welcome2(message):
             subscriptions = db1520.get_subscriptions()
 
             bot.send_message(message.from_user.id, 'https://www.instagram.com/kaptsovka/?hl=ru\n{0.first_name}, загляни в инстаграм Капцовки.\nВозможно там появилось что-то интересное!'.format(message.from_user, bot.get_me()),
-                parse_mode='html')
+            parse_mode='html')
 
-            time.sleep(345600)
+            bot.send_message(message.from_user.id, 'https://www.instagram.com/kaptsovschool/\n{0.first_name}, загляни в инстаграм Школы 1520 им. Капцовых.\nВозможно там появилось что-то интересное!'.format(message.from_user, bot.get_me()),
+            parse_mode='html')
+
+            time.sleep(172800)
 
     except:
         logger.warning("WARNING with welcome2")
@@ -192,9 +195,7 @@ def lalala(message):
             for i in range(53):
                 if message.text == censur[i]:
                     bot.send_message(message.chat.id, 'Вы слишком грубо со мной обращаетесь! Будьте любезнее...')
-
-            
-
+                    
     except:
         logger.warning("WARNING with lalala")
         logger.error("ERROR with lalala")
