@@ -98,10 +98,14 @@ def lalala(message):
         if message.chat.type == 'private':
             censur = ["Хуй",
                 "хуй",
+                "Хер",
+                "хер",
                 "Блять", 
                 "блять", 
                 "Блядь", 
                 "блядь", 
+                "Бля",
+                "бля",
                 "Иди в жопу", 
                 "иди в жопу", 
                 "Иди нахуй", 
@@ -147,7 +151,11 @@ def lalala(message):
                 "Порно", 
                 "порно", 
                 "Порнуха", 
-                "порнуха"
+                "порнуха",
+                "Фак",
+                "фак",
+                "Fuck",
+                "fuck"
             ]
 
             if message.text == '👀 О школе':
@@ -192,7 +200,7 @@ def lalala(message):
 
                 bot.send_message(message.chat.id, 'Связаться с...', reply_markup=markup)
 
-            for i in range(53):
+            for i in range(60):
                 if message.text == censur[i]:
                     bot.send_message(message.chat.id, 'Вы слишком грубо со мной обращаетесь! Будьте любезнее...')
                     
@@ -2048,6 +2056,8 @@ def callback_inline(call):
         logger.warning("WARNING with callback_inline")
         logger.error("ERROR with callback_inline")
         logger.critical("CRITICAL with callback_inline")
+
+bot.remove_webhook()
 
 # RUN
 bot.polling(none_stop=True)
