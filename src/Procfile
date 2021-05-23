@@ -1,1 +1,1 @@
-worker: python botallclasses.py
+bot: python botallclasses.py

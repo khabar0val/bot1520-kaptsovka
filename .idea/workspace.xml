@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="5091874c-17aa-4ac0-8469-39c32946f6fd" name="Default Changelist" comment="bot1520 1.0.4v false1">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Procfile" beforeDir="false" afterPath="$PROJECT_DIR$/src/Procfile" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
