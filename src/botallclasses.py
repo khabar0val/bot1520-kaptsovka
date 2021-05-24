@@ -6,6 +6,7 @@ import random
 import sqlite3
 import time
 
+from functools import lru_cache
 from telebot import types
 from loguru import logger
 from sqlighter import SQLighter
