@@ -6,8 +6,8 @@ After=network.target
 [Service]
 Type=simple
 User=khabar0val
-WorkingDirectory=/home/khabar0val/bot/src
-ExecStart=/usr/bin/python3 /home/khabar0val/bot/src/botallclasses.py
+WorkingDirectory=/usr/local/bin/bot/src
+ExecStart=/usr/bin/python3 /usr/local/bin/bot/src/botallclasses.py
 RestartSec=10
 Restart=always
  
