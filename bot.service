@@ -1,0 +1,15 @@
+[Unit]
+Description=Telegram bot 'Капцовка'
+After=syslog.target
+After=network.target
+
+[Service]
+Type=simple
+User=khabar0val
+WorkingDirectory=/home/khabar0val/bot/src
+ExecStart=/usr/bin/python3 /home/khabar0val/bot/src/botallclasses.py
+RestartSec=10
+Restart=always
+ 
+[Install]
+WantedBy=multi-user.target

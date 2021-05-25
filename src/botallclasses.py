@@ -16,7 +16,7 @@ with open("token.txt") as T:
 
 bot = telebot.TeleBot(TOKEN)
 db1520 = SQLighter('db1520.db')
-dblottery = SQLighterLottery('lottery/lottery.db')
+dblottery = SQLighterLottery('lottery.db')
 
 # add filemode="w" to overwrite
 logger.add("bot1520log.log", format = "{time} {level} {message}", level = "WARNING", rotation = "1 week", compression = "zip")

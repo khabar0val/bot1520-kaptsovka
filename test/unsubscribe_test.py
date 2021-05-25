@@ -3,7 +3,7 @@ from loguru import logger
 import telebot
 
 TOKEN = None
-with open("token.txt") as T:
+with open("../sweater/token.txt") as T:
 	TOKEN = T.read().strip()
 
 bot = telebot.TeleBot(TOKEN)
