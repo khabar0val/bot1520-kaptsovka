@@ -1,16 +1,13 @@
-#-*- coding: utf-8 -*-
-#! /usr/bin/e# nv python
+# -*- coding: utf-8 -*-
+# ! /usr/bin/e# nv python
 
 import telebot
-import random
-import sqlite3
 import time
 
-from functools import lru_cache
 from telebot import types
 from loguru import logger
 from sqlighter import SQLighter
-from datetime import datetime
+from sqlighter_lottery import SQLighterLottery
 
 TOKEN = None
 
@@ -19,6 +16,7 @@ with open("token.txt") as T:
 
 bot = telebot.TeleBot(TOKEN)
 db1520 = SQLighter('db1520.db')
+dblottery = SQLighterLottery('lottery/lottery.db')
 
 # add filemode="w" to overwrite
 logger.add("bot1520log.log", format = "{time} {level} {message}", level = "WARNING", rotation = "1 week", compression = "zip")
@@ -32,7 +30,7 @@ def subscribe(message):
         else:
             # если он уже есть, то просто обновляем ему статус подписки
             db1520.update_subscription(message.from_user.id, True)
-        
+
         bot.send_message(message.from_user.id, "Вы успешно подписались на новости Капцовки!  😝\nСкоро выйдут новые события и вы узнаете о них первыми =)")
 
     except:
@@ -67,9 +65,10 @@ def welcome2(message):
         item2 = types.KeyboardButton("🧑‍🏫 Расписание")
         item3 = types.KeyboardButton("🐵 Поговорим?")
         item4 = types.KeyboardButton("Связаться с...")
-     
-        markup.add(item1, item2, item3, item4)
-     
+        item5 = types.KeyboardButton("✅ Получить 5")
+
+        markup.add(item1, item2, item3, item4, item5)
+
         bot.send_message(message.chat.id, "Добро пожаловать, {0.first_name}!\nЯ - <b>{1.first_name}</b>, бот созданный чтобы помогать вам с информацией о школе".format(message.from_user, bot.get_me()),
             parse_mode='html', reply_markup=markup)
 
@@ -92,123 +91,130 @@ def welcome2(message):
         logger.warning("WARNING with welcome2")
         logger.error("ERROR with welcome2")
         logger.critical("CRITICAL with welcome2")
- 
+
 @bot.message_handler(content_types=['text'])
 def lalala(message):
-    try:
-        if message.chat.type == 'private':
-            censur = ["Хуй",
-                "хуй",
-                "Хер",
-                "хер",
-                "Блять", 
-                "блять", 
-                "Блядь", 
-                "блядь", 
-                "Бля",
-                "бля",
-                "Иди в жопу", 
-                "иди в жопу", 
-                "Иди нахуй", 
-                "иди нахуй", 
-                "Иди на хуй", 
-                "иди на хуй", 
-                "Иди в задницу", 
-                "иди в задницу", 
-                "Иди на фиг", 
-                "иди на фиг", 
-                "Иди на хрен", 
-                "иди на хрен", 
-                "Иди нахер", 
-                "иди нахер", 
-                "Иди на хер", 
-                "иди на хер", 
-                "Сука", 
-                "сука", 
-                "Сукин сын", 
-                "сукин сын", 
-                "Сукин ты сын", 
-                "сукин ты сын", 
-                "Лох", 
-                "лох", 
-                "Ты лох", 
-                "ты лох", 
-                "Ебать", 
-                "ебать", 
-                "Ебать ты лох", 
-                "ебать ты лох", 
-                "Лошара", 
-                "лошара", 
-                "Пиздец", 
-                "пиздец", 
-                "Ебаный рот", 
-                "ебаный рот", 
-                "Ебанный рот", 
-                "ебанный рот", 
-                "Пизда", 
-                "пизда", 
-                "Манда", 
-                "манда", 
-                "Порно", 
-                "порно", 
-                "Порнуха", 
-                "порнуха",
-                "Фак",
-                "фак",
-                "Fuck",
-                "fuck"
-            ]
+    if message.chat.type == 'private':
+        censur = ["Хуй",
+                  "хуй",
+                  "Хер",
+                  "хер",
+                  "Блять",
+                  "блять",
+                  "Блядь",
+                  "блядь",
+                  "Бля",
+                  "бля",
+                  "Иди в жопу",
+                  "иди в жопу",
+                  "Иди нахуй",
+                  "иди нахуй",
+                  "Иди на хуй",
+                  "иди на хуй",
+                  "Иди в задницу",
+                  "иди в задницу",
+                  "Иди на фиг",
+                  "иди на фиг",
+                  "Иди на хрен",
+                  "иди на хрен",
+                  "Иди нахер",
+                  "иди нахер",
+                  "Иди на хер",
+                  "иди на хер",
+                  "Сука",
+                  "сука",
+                  "Сукин сын",
+                  "сукин сын",
+                  "Сукин ты сын",
+                  "сукин ты сын",
+                  "Лох",
+                  "лох",
+                  "Ты лох",
+                  "ты лох",
+                  "Ебать",
+                  "ебать",
+                  "Ебать ты лох",
+                  "ебать ты лох",
+                  "Лошара",
+                  "лошара",
+                  "Пиздец",
+                  "пиздец",
+                  "Ебаный рот",
+                  "ебаный рот",
+                  "Ебанный рот",
+                  "ебанный рот",
+                  "Пизда",
+                  "пизда",
+                  "Манда",
+                  "манда",
+                  "Порно",
+                  "порно",
+                  "Порнуха",
+                  "порнуха",
+                  "Фак",
+                  "фак",
+                  "Fuck",
+                  "fuck"
+                  ]
 
-            if message.text == '👀 О школе':
-                bot.send_message(message.chat.id, "👨‍🏫 «Школа № 1520 имени Капцовых» — одно из старейших образовательных учреждений Москвы! У истоков современной школы — городское начальное училище для мальчиков имени Сергея Алексеевича Капцова, подаренное городу в мае 1892 года гласным Московской городской Думы, купцом первой гильдии, потомственным почетным гражданином, меценатом Александром Сергеевичем Капцовым в память о своем отце С. А. Капцове. Сейчас во главе нашей школы находится замечательный человек и талантливый директор\nКириченко Вита Викторовна 👏")
-            elif message.text == '🧑‍🏫 Расписание':
-     
-                markup = types.InlineKeyboardMarkup(row_width=2)
-                item1 = types.InlineKeyboardButton("1 класс", callback_data='1')
-                item2 = types.InlineKeyboardButton("2 класс", callback_data='2')
-                item3 = types.InlineKeyboardButton("3 класс", callback_data='3')
-                item4 = types.InlineKeyboardButton("4 класс", callback_data='4')
-                item5 = types.InlineKeyboardButton("5 класс", callback_data='5')
-                item6 = types.InlineKeyboardButton("6 класс", callback_data='6')
-                item7 = types.InlineKeyboardButton("7 класс", callback_data='7')
-                item8 = types.InlineKeyboardButton("8 класс", callback_data='8')
-                item9 = types.InlineKeyboardButton("9 класс", callback_data='9')
-                item10 = types.InlineKeyboardButton("10 класс", callback_data='10')
-                item11 = types.InlineKeyboardButton("11 класс", callback_data='11')
-     
-                markup.add(item1, item2, item3, item4, item5, item6, item7, item8, item9, item10, item11)
+        if message.text == '👀 О школе':
+            bot.send_message(message.chat.id,
+                             "👨‍🏫 «Школа № 1520 имени Капцовых» — одно из старейших образовательных учреждений Москвы! У истоков современной школы — городское начальное училище для мальчиков имени Сергея Алексеевича Капцова, подаренное городу в мае 1892 года гласным Московской городской Думы, купцом первой гильдии, потомственным почетным гражданином, меценатом Александром Сергеевичем Капцовым в память о своем отце С. А. Капцове. Сейчас во главе нашей школы находится замечательный человек и талантливый директор\nКириченко Вита Викторовна 👏")
+        elif message.text == '🧑‍🏫 Расписание':
 
-                bot.send_message(message.chat.id, "👩‍🏫 В каком вы классе?", reply_markup=markup)
+            markup = types.InlineKeyboardMarkup(row_width=2)
+            item1 = types.InlineKeyboardButton("1 класс", callback_data='1')
+            item2 = types.InlineKeyboardButton("2 класс", callback_data='2')
+            item3 = types.InlineKeyboardButton("3 класс", callback_data='3')
+            item4 = types.InlineKeyboardButton("4 класс", callback_data='4')
+            item5 = types.InlineKeyboardButton("5 класс", callback_data='5')
+            item6 = types.InlineKeyboardButton("6 класс", callback_data='6')
+            item7 = types.InlineKeyboardButton("7 класс", callback_data='7')
+            item8 = types.InlineKeyboardButton("8 класс", callback_data='8')
+            item9 = types.InlineKeyboardButton("9 класс", callback_data='9')
+            item10 = types.InlineKeyboardButton("10 класс", callback_data='10')
+            item11 = types.InlineKeyboardButton("11 класс", callback_data='11')
 
-            elif message.text == '🐵 Поговорим?':
+            markup.add(item1, item2, item3, item4, item5, item6, item7, item8, item9, item10, item11)
 
-                markup = types.InlineKeyboardMarkup(row_width=2)
-                item1 = types.InlineKeyboardButton("good", callback_data='good')
-                item2 = types.InlineKeyboardButton("bad", callback_data='bad')
+            bot.send_message(message.chat.id, "👩‍🏫 В каком вы классе?", reply_markup=markup)
 
-                markup.add(item1, item2)
+        elif message.text == '🐵 Поговорим?':
 
-                bot.send_message(message.chat.id, '🐻 How are you?', reply_markup=markup)
+            markup = types.InlineKeyboardMarkup(row_width=2)
+            item1 = types.InlineKeyboardButton("good", callback_data='good')
+            item2 = types.InlineKeyboardButton("bad", callback_data='bad')
 
-            elif message.text == 'Связаться с...':
+            markup.add(item1, item2)
 
-                markup = types.InlineKeyboardMarkup(row_width=2)
-                item1 = types.InlineKeyboardButton("Педагоги", callback_data='ПС')
-                item2 = types.InlineKeyboardButton("Зам. Директора", callback_data='АД')
-                item3 = types.InlineKeyboardButton("Директор", callback_data='Д')
+            bot.send_message(message.chat.id, '🐻 How are you?', reply_markup=markup)
 
-                markup.add(item1, item2, item3)
+        elif message.text == 'Связаться с...':
 
-                bot.send_message(message.chat.id, 'Связаться с...', reply_markup=markup)
+            markup = types.InlineKeyboardMarkup(row_width=2)
+            item1 = types.InlineKeyboardButton("Педагоги", callback_data='ПС')
+            item2 = types.InlineKeyboardButton("Зам. Директора", callback_data='АД')
+            item3 = types.InlineKeyboardButton("Директор", callback_data='Д')
 
-            for i in range(60):
-                if message.text == censur[i]:
-                    bot.send_message(message.chat.id, 'Вы слишком грубо со мной обращаетесь! Будьте любезнее...')
-                    
-    except:
-        logger.warning("WARNING with lalala")
-        logger.error("ERROR with lalala")
-        logger.critical("CRITICAL with lalala")
+            markup.add(item1, item2, item3)
+
+            bot.send_message(message.chat.id, 'Связаться с...', reply_markup=markup)
+
+        elif message.text == '✅ Получить 5':
+
+            msg = bot.send_message(message.chat.id, 'Чтобы одним из первых получить доступ к сайту, на котором можно получить 5, впишите следующим сообщением свои Ф.И.О.')
+            bot.register_next_step_handler(msg, request)
+
+        for i in range(60):
+            if message.text == censur[i]:
+                bot.send_message(message.chat.id, 'Вы слишком грубо со мной обращаетесь! Будьте любезнее...')
+
+def request(message):
+    phio = message.text
+    dblottery.add_request(message.from_user.id, phio)
+
+    bot.send_message(message.from_user.id, 'Поздравляю, {0.first_name}!\nТеперь вы официально участник розыграша на получение возможности протестировать бету сайта школы, на котором вы можете получить 5 ✅'.format(message.from_user, bot.get_me()),
+        parse_mode='html')
 
 @bot.callback_query_handler(func=lambda call: True)
 def callback_inline(call):
@@ -409,7 +415,7 @@ def callback_inline(call):
                         reply_markup=None)
 
             elif call.data == 'b':
-                    
+
                     b = open("1class/rasp_1b.pdf", "rb")
                     bot.send_document(call.message.chat.id, b)
 
@@ -423,7 +429,7 @@ def callback_inline(call):
 
                     bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="🧑‍🏫 Вот ваше расписание",
                         reply_markup=None)
-                    
+
             elif call.data == 'g':
 
                     g = open("1class/rasp_1g.pdf", "rb")
@@ -433,7 +439,7 @@ def callback_inline(call):
                         reply_markup=None)
 
             elif call.data == 'd':
-                    
+
                     d = open("1class/rasp_1d.pdf", "rb")
                     bot.send_document(call.message.chat.id, d)
 
@@ -441,7 +447,7 @@ def callback_inline(call):
                         reply_markup=None)
 
             elif call.data == 'e':
-                    
+
                     e = open("1class/rasp_1e.pdf", "rb")
                     bot.send_document(call.message.chat.id, e)
 
@@ -457,7 +463,7 @@ def callback_inline(call):
                         reply_markup=None)
 
             elif call.data == 'b2':
-                    
+
                     b = open("2class/rasp_2b.pdf", "rb")
                     bot.send_document(call.message.chat.id, b)
 
@@ -471,7 +477,7 @@ def callback_inline(call):
 
                     bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="🧑‍🏫 Вот ваше расписание",
                         reply_markup=None)
-                    
+
             elif call.data == 'g2':
 
                     g = open("2class/rasp_2g.pdf", "rb")
@@ -481,7 +487,7 @@ def callback_inline(call):
                         reply_markup=None)
 
             elif call.data == 'd2':
-                    
+
                     d = open("2class/rasp_2d.pdf", "rb")
                     bot.send_document(call.message.chat.id, d)
 
@@ -489,7 +495,7 @@ def callback_inline(call):
                         reply_markup=None)
 
             elif call.data == 'e2':
-                    
+
                     e = open("2class/rasp_2e.pdf", "rb")
                     bot.send_document(call.message.chat.id, e)
 
@@ -505,7 +511,7 @@ def callback_inline(call):
                         reply_markup=None)
 
             elif call.data == 'b3':
-                    
+
                     b = open("3class/rasp_3b.pdf", "rb")
                     bot.send_document(call.message.chat.id, b)
 
@@ -516,10 +522,10 @@ def callback_inline(call):
 
                     v = open("3class/rasp_3v.pdf", "rb")
                     bot.send_document(call.message.chat.id, v)
-                    
+
                     bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="🧑‍🏫 Вот ваше расписание",
                         reply_markup=None)
-                    
+
             elif call.data == 'g3':
 
                     g = open("3class/rasp_3g.pdf", "rb")
@@ -529,7 +535,7 @@ def callback_inline(call):
                         reply_markup=None)
 
             elif call.data == 'd3':
-                    
+
                     d = open("3class/rasp_3d.pdf", "rb")
                     bot.send_document(call.message.chat.id, d)
 
@@ -537,7 +543,7 @@ def callback_inline(call):
                         reply_markup=None)
 
             elif call.data == 'e3':
-                    
+
                     e = open("3class/rasp_3e.pdf", "rb")
                     bot.send_document(call.message.chat.id, e)
 
@@ -553,7 +559,7 @@ def callback_inline(call):
                         reply_markup=None)
 
             elif call.data == 'b4':
-                    
+
                     b = open("4class/rasp_4b.pdf", "rb")
                     bot.send_document(call.message.chat.id, b)
 
@@ -567,7 +573,7 @@ def callback_inline(call):
 
                     bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="🧑‍🏫 Вот ваше расписание",
                         reply_markup=None)
-                    
+
             elif call.data == 'g4':
 
                     g = open("4class/rasp_4g.pdf", "rb")
@@ -577,7 +583,7 @@ def callback_inline(call):
                         reply_markup=None)
 
             elif call.data == 'd4':
-                    
+
                     d = open("4class/rasp_4d.pdf", "rb")
                     bot.send_document(call.message.chat.id, d)
 
@@ -585,7 +591,7 @@ def callback_inline(call):
                         reply_markup=None)
 
             elif call.data == 'e4':
-                    
+
                     e = open("4class/rasp_4e.pdf", "rb")
                     bot.send_document(call.message.chat.id, e)
 
@@ -601,7 +607,7 @@ def callback_inline(call):
                         reply_markup=None)
 
             elif call.data == 'b5':
-                    
+
                     b = open("5class/rasp_5b3.pdf", "rb")
                     bot.send_document(call.message.chat.id, b)
 
@@ -615,7 +621,7 @@ def callback_inline(call):
 
                     bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="🧑‍🏫 Вот ваше расписание",
                         reply_markup=None)
-                    
+
             elif call.data == 'g5':
 
                     g = open("5class/rasp_5g1.pdf", "rb")
@@ -625,7 +631,7 @@ def callback_inline(call):
                         reply_markup=None)
 
             elif call.data == 'd5':
-                    
+
                     d = open("5class/rasp_5d3.pdf", "rb")
                     bot.send_document(call.message.chat.id, d)
 
@@ -633,7 +639,7 @@ def callback_inline(call):
                         reply_markup=None)
 
             elif call.data == 'e5':
-                    
+
                     e = open("5class/rasp_5e3.pdf", "rb")
                     bot.send_document(call.message.chat.id, e)
 
@@ -649,7 +655,7 @@ def callback_inline(call):
                         reply_markup=None)
 
             elif call.data == 'b6':
-                    
+
                     b = open("6class/rasp_6b1.pdf", "rb")
                     bot.send_document(call.message.chat.id, b)
 
@@ -663,7 +669,7 @@ def callback_inline(call):
 
                     bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="🧑‍🏫 Вот ваше расписание",
                         reply_markup=None)
-                    
+
             elif call.data == 'g6':
 
                     g = open("6class/rasp_6g.pdf", "rb")
@@ -673,7 +679,7 @@ def callback_inline(call):
                         reply_markup=None)
 
             elif call.data == 'd6':
-                    
+
                     d = open("6class/rasp_6d1.pdf", "rb")
                     bot.send_document(call.message.chat.id, d)
 
@@ -681,7 +687,7 @@ def callback_inline(call):
                         reply_markup=None)
 
             elif call.data == 'e6':
-                    
+
                     e = open("6class/rasp_6e2.pdf", "rb")
                     bot.send_document(call.message.chat.id, e)
 
@@ -697,7 +703,7 @@ def callback_inline(call):
                         reply_markup=None)
 
             elif call.data == 'b7':
-                    
+
                     b = open("7class/rasp_7b1.pdf", "rb")
                     bot.send_document(call.message.chat.id, b)
 
@@ -711,7 +717,7 @@ def callback_inline(call):
 
                     bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="🧑‍🏫 Вот ваше расписание",
                         reply_markup=None)
-                    
+
             elif call.data == 'g7':
 
                     g = open("7class/rasp_7g1.pdf", "rb")
@@ -721,7 +727,7 @@ def callback_inline(call):
                         reply_markup=None)
 
             elif call.data == 'd7':
-                    
+
                     d = open("7class/rasp_7d1.pdf", "rb")
                     bot.send_document(call.message.chat.id, d)
 
@@ -729,7 +735,7 @@ def callback_inline(call):
                         reply_markup=None)
 
             elif call.data == 'e7':
-                    
+
                     e = open("7class/rasp_7e1.pdf", "rb")
                     bot.send_document(call.message.chat.id, e)
 
@@ -745,7 +751,7 @@ def callback_inline(call):
                         reply_markup=None)
 
             elif call.data == 'b8':
-                    
+
                     b = open("8class/rasp_8b1.pdf", "rb")
                     bot.send_document(call.message.chat.id, b)
 
@@ -759,7 +765,7 @@ def callback_inline(call):
 
                     bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="🧑‍🏫 Вот ваше расписание",
                         reply_markup=None)
-                    
+
             elif call.data == 'g8':
 
                     g = open("8class/rasp_8g1.pdf", "rb")
@@ -769,7 +775,7 @@ def callback_inline(call):
                         reply_markup=None)
 
             elif call.data == 'd8':
-                    
+
                     d = open("8class/rasp_8d1.pdf", "rb")
                     bot.send_document(call.message.chat.id, d)
 
@@ -777,7 +783,7 @@ def callback_inline(call):
                         reply_markup=None)
 
             elif call.data == 'e8':
-                    
+
                     e = open("8class/rasp_8e1.pdf", "rb")
                     bot.send_document(call.message.chat.id, e)
 
@@ -793,7 +799,7 @@ def callback_inline(call):
                         reply_markup=None)
 
             elif call.data == 'b9':
-                    
+
                     b = open("9class/rasp_9b2.pdf", "rb")
                     bot.send_document(call.message.chat.id, b)
 
@@ -807,7 +813,7 @@ def callback_inline(call):
 
                     bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="🧑‍🏫 Вот ваше расписание",
                         reply_markup=None)
-                    
+
             elif call.data == 'g9':
 
                     g = open("9class/rasp_9g2.pdf", "rb")
@@ -817,7 +823,7 @@ def callback_inline(call):
                         reply_markup=None)
 
             elif call.data == 'd9':
-                    
+
                     d = open("9class/rasp_9d2.pdf", "rb")
                     bot.send_document(call.message.chat.id, d)
 
@@ -825,7 +831,7 @@ def callback_inline(call):
                         reply_markup=None)
 
             elif call.data == 'e9':
-                    
+
                     e = open("9class/rasp_9e1.pdf", "rb")
                     bot.send_document(call.message.chat.id, e)
 
@@ -841,7 +847,7 @@ def callback_inline(call):
                         reply_markup=None)
 
             elif call.data == 'b10':
-                    
+
                     b = open("10class/rasp_10b1.pdf", "rb")
                     bot.send_document(call.message.chat.id, b)
 
@@ -855,7 +861,7 @@ def callback_inline(call):
 
                     bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="🧑‍🏫 Вот ваше расписание",
                         reply_markup=None)
-                    
+
             elif call.data == 'g10':
 
                     g = open("10class/rasp_10g1.pdf", "rb")
@@ -865,7 +871,7 @@ def callback_inline(call):
                         reply_markup=None)
 
             elif call.data == 'd10':
-                    
+
                     d = open("10class/rasp_10d1.pdf", "rb")
                     bot.send_document(call.message.chat.id, d)
 
@@ -873,7 +879,7 @@ def callback_inline(call):
                         reply_markup=None)
 
             elif call.data == 'e10':
-                    
+
                     e = open("10class/rasp_10e1.pdf", "rb")
                     bot.send_document(call.message.chat.id, e)
 
@@ -889,7 +895,7 @@ def callback_inline(call):
                         reply_markup=None)
 
             elif call.data == 'b11':
-                    
+
                     b = open("11class/rasp_11b1.pdf", "rb")
                     bot.send_document(call.message.chat.id, b)
 
@@ -903,7 +909,7 @@ def callback_inline(call):
 
                     bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="🧑‍🏫 Вот ваше расписание",
                         reply_markup=None)
-                    
+
             elif call.data == 'g11':
 
                     g = open("11class/rasp_11g1.pdf", "rb")
@@ -913,7 +919,7 @@ def callback_inline(call):
                         reply_markup=None)
 
             elif call.data == 'd11':
-                    
+
                     d = open("11class/rasp_11d1.pdf", "rb")
                     bot.send_document(call.message.chat.id, d)
 
@@ -921,13 +927,13 @@ def callback_inline(call):
                         reply_markup=None)
 
             elif call.data == 'e11':
-                    
+
                     e = open("11class/rasp_11e1.pdf", "rb")
                     bot.send_document(call.message.chat.id, e)
 
                     bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="🧑‍🏫 Вот ваше расписание",
-                        reply_markup=None)                    
-    
+                        reply_markup=None)
+
             elif call.data == 'good':
                 bot.send_message(call.message.chat.id, 'Вот и отличненько 😊')
 
@@ -1244,7 +1250,7 @@ def callback_inline(call):
                 item23 = types.InlineKeyboardButton("Т.С. Ширяева", callback_data='shir')
                 item24 = types.InlineKeyboardButton("А.А. Шилова", callback_data='shilova')
 
-                markup.add(item1, item2, item3, item4, item5, item6, item7, item8, item9, item10, item11, item12, item13, item14, item15, item16, item17, item18, item19, item20, item21, item22, item23, item24) 
+                markup.add(item1, item2, item3, item4, item5, item6, item7, item8, item9, item10, item11, item12, item13, item14, item15, item16, item17, item18, item19, item20, item21, item22, item23, item24)
                 bot.send_message(call.message.chat.id, 'Какой учитель?', reply_markup=markup)
 
                 bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Какой предмет?",
@@ -1414,7 +1420,7 @@ def callback_inline(call):
             elif call.data == 'shilova':
                 bot.send_message(call.message.chat.id, '1.Учитель Английского\nПочта: a.shilova@1520edu.ru',
                 parse_mode='html')
-                
+
                 bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Шилова Анастасия Александровна",
                 reply_markup=None)
 
@@ -1456,7 +1462,7 @@ def callback_inline(call):
             elif call.data == 'yakim':
                 bot.send_message(call.message.chat.id, '1.Учитель Немецкого\nПочта: s.jakimov@1520edu.ru',
                 parse_mode='html')
-                
+
                 bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Якимов Сергей Евгеньевич",
                 reply_markup=None)
 
@@ -2057,8 +2063,6 @@ def callback_inline(call):
         logger.warning("WARNING with callback_inline")
         logger.error("ERROR with callback_inline")
         logger.critical("CRITICAL with callback_inline")
-
-bot.remove_webhook()
 
 # RUN
 bot.polling(none_stop=True)
