@@ -34,7 +34,7 @@ def welcome2(message):
     bot.send_message(message.chat.id,
                      "Добро пожаловать, {0.first_name}!\nЯ - <b>{1.first_name}</b>, бот созданный чтобы помогать вам с информацией о школе".format(
                          message.from_user, bot.get_me()),
-                     parse_mode='html', reply_markup=marup)
+                     parse_mode='html', reply_markup=markup)
 
     while True:
         bot.send_message(message.chat.id,
