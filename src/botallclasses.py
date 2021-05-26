@@ -6,7 +6,6 @@ import time
 
 from telebot import types
 from loguru import logger
-from sqlighter import SQLighter
 from sqlighter_lottery import SQLighterLottery
 
 TOKEN = None
@@ -15,46 +14,10 @@ with open("token.txt") as T:
 	TOKEN = T.read().strip()
 
 bot = telebot.TeleBot(TOKEN)
-db1520 = SQLighter('db1520.db')
 dblottery = SQLighterLottery('lottery.db')
 
 # add filemode="w" to overwrite
 logger.add("bot1520log.log", format = "{time} {level} {message}", level = "WARNING", rotation = "1 week", compression = "zip")
-
-@bot.message_handler(commands=['subscribe'])
-def subscribe(message):
-    try:
-        if(not db1520.subscriber_exists(message.from_user.id)):
-            # если юзера нет в базе, добавляем его
-            db1520.add_subscriber(message.from_user.id)
-        else:
-            # если он уже есть, то просто обновляем ему статус подписки
-            db1520.update_subscription(message.from_user.id, True)
-
-        bot.send_message(message.from_user.id, "Вы успешно подписались на новости Капцовки!  😝\nСкоро выйдут новые события и вы узнаете о них первыми =)")
-
-    except:
-        logger.warning("WARNING with subscribe")
-        logger.error("ERROR with subscribe")
-        logger.critical("CRITICAL with subscribe")
-
-# Команда отписки
-@bot.message_handler(commands=['unsubscribe'])
-def unsubscribe(message):
-    try:
-        if(not db1520.subscriber_exists(message.from_user.id)):
-            # если юзера нет в базе, добавляем его с неактивной подпиской (запоминаем)
-            db1520.add_subscriber(message.from_user.id, False)
-            bot.send_message(message.from_user.id, "Вы и так не подписаны.")
-        else:
-            # если он уже есть, то просто обновляем ему статус подписки
-            db1520.update_subscription(message.from_user.id, False)
-            bot.send_message(message.from_user.id, "Вы успешно отписались.")
-
-    except:
-        logger.warning("WARNING with unsubscribe")
-        logger.error("ERROR with unsubscribe")
-        logger.critical("CRITICAL with unsubscribe")
 
 @bot.message_handler(commands=['start'])
 def welcome2(message):
@@ -72,12 +35,7 @@ def welcome2(message):
         bot.send_message(message.chat.id, "Добро пожаловать, {0.first_name}!\nЯ - <b>{1.first_name}</b>, бот созданный чтобы помогать вам с информацией о школе".format(message.from_user, bot.get_me()),
             parse_mode='html', reply_markup=markup)
 
-        if(not db1520.subscriber_exists(message.from_user.id)):
-            # если юзера нет в базе, добавляем его с неактивной подпиской (запоминаем)
-            db1520.add_subscriber(message.from_user.id, False)
-
         while True:
-            subscriptions = db1520.get_subscriptions()
 
             bot.send_message(message.from_user.id, 'https://www.instagram.com/kaptsovka/?hl=ru\n{0.first_name}, загляни в инстаграм Капцовки.\nВозможно там появилось что-то интересное!'.format(message.from_user, bot.get_me()),
             parse_mode='html')
