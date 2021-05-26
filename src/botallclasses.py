@@ -22,6 +22,7 @@ logger.add("bot1520log.log", format = "{time} {level} {message}", level = "WARNI
 @bot.message_handler(commands=['start'])
 def welcome2(message):
     try:
+
         # keyboard
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         item1 = types.KeyboardButton("👀 О школе")
@@ -33,15 +34,15 @@ def welcome2(message):
         markup.add(item1, item2, item3, item4, item5)
 
         bot.send_message(message.chat.id, "Добро пожаловать, {0.first_name}!\nЯ - <b>{1.first_name}</b>, бот созданный чтобы помогать вам с информацией о школе".format(message.from_user, bot.get_me()),
-            parse_mode='html', reply_markup=markup)
+            parse_mode='html', reply_markup=marup)
 
         while True:
 
             bot.send_message(message.from_user.id, 'https://www.instagram.com/kaptsovka/?hl=ru\n{0.first_name}, загляни в инстаграм Капцовки.\nВозможно там появилось что-то интересное!'.format(message.from_user, bot.get_me()),
-            parse_mode='html')
+                parse_mode='html')
 
             bot.send_message(message.from_user.id, 'https://www.instagram.com/kaptsovschool/\n{0.first_name}, загляни в инстаграм Школы 1520 им. Капцовых.\nВозможно там появилось что-то интересное!'.format(message.from_user, bot.get_me()),
-            parse_mode='html')
+                parse_mode='html')
 
             time.sleep(172800)
 
