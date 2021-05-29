@@ -7,6 +7,7 @@ import time
 from telebot import types
 from loguru import logger
 from sqlighter_lottery import SQLighterLottery
+from sqlighter import SQLighter
 
 TOKEN = None
 
@@ -15,12 +16,19 @@ with open("token.txt") as T:
 
 bot = telebot.TeleBot(TOKEN)
 dblottery = SQLighterLottery('lottery.db')
+db1520 = SQLighter('db1520.db')
 
 # add filemode="w" to overwrite
 logger.add("bot1520log.log", format = "{time} {level} {message}", level = "WARNING", rotation = "1 week", compression = "zip")
 
 @bot.message_handler(commands=['start'])
 def welcome2(message):
+    if (not db1520.subscriber_exists(message.from_user.id)):
+        db1520.add_subscriber(message.from_user.id)
+
+    else:
+        db1520.update_subscription(message.from_user.id, True)
+
     # keyboard
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     item1 = types.KeyboardButton("👀 О школе")
@@ -31,21 +39,16 @@ def welcome2(message):
 
     markup.add(item1, item2, item3, item4, item5)
 
-    bot.send_message(message.chat.id,
-                     "Добро пожаловать, {0.first_name}!\nЯ - <b>{1.first_name}</b>, бот созданный чтобы помогать вам с информацией о школе".format(
-                         message.from_user, bot.get_me()),
-                     parse_mode='html', reply_markup=markup)
+    bot.send_message(message.chat.id, "Добро пожаловать, {0.first_name}!\nЯ - <b>{1.first_name}</b>, бот созданный чтобы помогать вам с информацией о школе".format(message.from_user, bot.get_me()),
+    parse_mode='html', reply_markup=markup)
 
     while True:
-        bot.send_message(message.chat.id,
-                         'https://www.instagram.com/kaptsovka/?hl=ru\n{0.first_name}, загляни в инстаграм Капцовки.\nВозможно там появилось что-то интересное!'.format(
-                             message.from_user, bot.get_me()),
-                         parse_mode='html')
 
-        bot.send_message(message.chat.id,
-                         'https://www.instagram.com/kaptsovschool/\n{0.first_name}, загляни в инстаграм Школы 1520 им. Капцовых.\nВозможно там появилось что-то интересное!'.format(
-                             message.from_user, bot.get_me()),
-                         parse_mode='html')
+        bot.send_message(message.chat.id, 'https://www.instagram.com/kaptsovka/?hl=ru\n{0.first_name}, загляни в инстаграм Капцовки.\nВозможно там появилось что-то интересное!'.format(message.from_user, bot.get_me()),
+        parse_mode='html')
+
+        bot.send_message(message.chat.id, 'https://www.instagram.com/kaptsovschool/\n{0.first_name}, загляни в инстаграм Школы 1520 им. Капцовых.\nВозможно там появилось что-то интересное!'.format(message.from_user, bot.get_me()),
+        parse_mode='html')
 
         time.sleep(172800)
 
