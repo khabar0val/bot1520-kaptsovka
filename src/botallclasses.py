@@ -170,7 +170,7 @@ def lalala(message):
 
         elif message.text == "Оставить отзыв":
 
-            msg = bot.send_message(message.chat.id, "Следующим сообщением запишите ваши самые искренние впечвтление о боте...")
+            msg = bot.send_message(message.chat.id, "Следующим сообщением запишите ваши самые искренние впечатления о боте...")
             bot.register_next_step_handler(msg, otziv)
 
         for i in range(60):
