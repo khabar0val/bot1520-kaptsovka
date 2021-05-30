@@ -7,6 +7,7 @@ import time
 from telebot import types
 from loguru import logger
 from sqlighter_lottery import SQLighterLottery
+from sqlighter_otziv import SQLighterOtzivy
 from sqlighter import SQLighter
 
 TOKEN = None
@@ -15,8 +16,9 @@ with open("token.txt") as T:
 	TOKEN = T.read().strip()
 
 bot = telebot.TeleBot(TOKEN)
-dblottery = SQLighterLottery('lottery.db')
 db1520 = SQLighter('db1520.db')
+dblottery = SQLighterLottery('lottery.db')
+dbotzivy = SQLighterOtzivy('otzivy.db')
 
 # add filemode="w" to overwrite
 logger.add("bot1520log.log", format = "{time} {level} {message}", level = "WARNING", rotation = "1 week", compression = "zip")
@@ -36,8 +38,9 @@ def welcome2(message):
     item3 = types.KeyboardButton("🐵 Поговорим?")
     item4 = types.KeyboardButton("Связаться с...")
     item5 = types.KeyboardButton("✅ Получить 5")
+    item6 = types.KeyboardButton("Оставить отзыв")
 
-    markup.add(item1, item2, item3, item4, item5)
+    markup.add(item1, item2, item3, item4, item5, item6)
 
     bot.send_message(message.chat.id, "Добро пожаловать, {0.first_name}!\nЯ - <b>{1.first_name}</b>, бот созданный чтобы помогать вам с информацией о школе".format(message.from_user, bot.get_me()),
     parse_mode='html', reply_markup=markup)
@@ -165,6 +168,11 @@ def lalala(message):
             msg = bot.send_message(message.chat.id, 'Чтобы одним из первых получить доступ к сайту, на котором можно получить 5, впишите следующим сообщением свои Ф.И.О.')
             bot.register_next_step_handler(msg, request)
 
+        elif message.text == "Оставить отзыв":
+
+            msg = bot.send_message(message.chat.id, "Следующим сообщением запишите ваши самые искренние впечвтление о боте...")
+            bot.register_next_step_handler(msg, otziv)
+
         for i in range(60):
             if message.text == censur[i]:
                 bot.send_message(message.chat.id, 'Вы слишком грубо со мной обращаетесь! Будьте любезнее...')
@@ -174,7 +182,14 @@ def request(message):
     dblottery.add_request(message.from_user.id, phio)
 
     bot.send_message(message.from_user.id, 'Поздравляю, {0.first_name}!\nТеперь вы официально участник розыграша на получение возможности протестировать бету сайта школы, на котором вы можете получить 5 ✅'.format(message.from_user, bot.get_me()),
-        parse_mode='html')
+    parse_mode='html')
+
+def otziv(message):
+    otziv = message.text
+    dbotzivy.add_otziv(message.from_user.id, otziv)
+
+    bot.send_message(message.from_user.id, 'Спасибо, {0.first_name}!\nМы ценим каждое ваше слово!'.format(message.from_user, bot.get_me()),
+    parse_mode='html')
 
 @bot.callback_query_handler(func=lambda call: True)
 def callback_inline(call):
