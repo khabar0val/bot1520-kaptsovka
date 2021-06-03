@@ -175,6 +175,9 @@ def lalala(message):
 
         for i in range(60):
             if message.text == censur[i]:
+
+                bot.delete_message(message.chat.id, message.message_id)
+
                 bot.send_message(message.chat.id, 'Вы слишком грубо со мной обращаетесь! Будьте любезнее...')
 
 def request(message):
