@@ -6,6 +6,7 @@ import time
 
 from telebot import types
 from loguru import logger
+from functools import lru_cache
 from sqlighter_lottery import SQLighterLottery
 from sqlighter_otziv import SQLighterOtzivy
 from sqlighter import SQLighter
@@ -23,6 +24,7 @@ dbotzivy = SQLighterOtzivy('otzivy.db')
 # add filemode="w" to overwrite
 logger.add("bot1520log.log", format = "{time} {level} {message}", level = "WARNING", rotation = "1 week", compression = "zip")
 
+@lru_cache()
 @bot.message_handler(commands=['start'])
 def welcome2(message):
     if (not db1520.subscriber_exists(message.from_user.id)):
@@ -173,7 +175,7 @@ def lalala(message):
             msg = bot.send_message(message.chat.id, "Следующим сообщением запишите ваши самые искренние впечатления о боте...")
             bot.register_next_step_handler(msg, otziv)
 
-        for i in range(60):
+        for i in range(60): 
             if message.text == censur[i]:
 
                 bot.delete_message(message.chat.id, message.message_id)
